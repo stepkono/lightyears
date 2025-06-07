@@ -1,0 +1,34 @@
+{
+    "name": "TouchActions",
+    "maps": [
+        {
+            "name": "Touch",
+            "id": "5c701ae2-f2dc-4bb5-aa8c-b7a9e582f2cc",
+            "actions": [
+                {
+                    "name": "DragView",
+                    "type": "Value",
+                    "id": "e33d9b21-5781-425e-bb5b-61dadabac212",
+                    "expectedControlType": "Delta",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "e2dd9ab9-0bd5-4673-a799-375daf259af3",
+                    "path": "<Touchscreen>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DragView",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
