@@ -4,7 +4,7 @@
 #
 .idea/
 .DS_Store
-.Assets/FigmaImporterAssets/Figma Downloader.asset
+Assets/FigmaImporterAssets/Figma Downloader.asset
 
 .utmp/
 /[Ll]ibrary/
