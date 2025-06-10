@@ -30,7 +30,8 @@ public class PlanetManager : MonoBehaviour
         var planetCam = GameObject.Find("PlanetCam");
         if (planetCam != null)
         {
-            CinemachineCamera cam = planetCam.GetComponent<CinemachineCamera>();;
+            //CinemachineCamera cam = planetCam.GetComponent<CinemachineCamera>();;
+            CinemachineCamera cam = GetComponentInChildren<CinemachineCamera>();
             if (cam != null)
             {
                 cam.Priority = 2;
