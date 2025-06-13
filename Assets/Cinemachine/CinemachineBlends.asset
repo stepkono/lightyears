@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CinemachineBlends
   m_EditorClassIdentifier: 
   CustomBlends:
-  - From: CinemachineCamera
+  - From: MainSceneCamera
     To: PlanetCam
     Blend:
       Style: 1
@@ -25,10 +25,32 @@ MonoBehaviour:
         m_PostInfinity: 0
         m_RotationOrder: 0
   - From: PlanetCam
-    To: CinemachineCamera
+    To: MainSceneCamera
     Blend:
       Style: 1
       Time: 2
+      CustomCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
+  - From: MainSceneCamera
+    To: TopDownCamera
+    Blend:
+      Style: 1
+      Time: 1
+      CustomCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
+  - From: TopDownCamera
+    To: MainSceneCamera
+    Blend:
+      Style: 1
+      Time: 1
       CustomCurve:
         serializedVersion: 2
         m_Curve: []

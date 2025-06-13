@@ -1,4 +1,5 @@
 using System;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -10,6 +11,8 @@ public class TouchManager : MonoBehaviour
     
     private InputSystem _inputSystem;
     private Camera _mainCamera;
+    private CinemachineBrain _cmBrain;
+    private Transform _activeCameraPos; 
     
     #region Events
     public delegate void StartTouch(Vector2 position, float startedTime);
@@ -26,7 +29,9 @@ public class TouchManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
             
             _inputSystem = new InputSystem();
-            _mainCamera = Camera.main; //TODO: This has to change dynamically based on the virtual camera
+            
+            _cmBrain = Camera.main.GetComponent<CinemachineBrain>();
+            _mainCamera = Camera.main;
         }
         else
         {
@@ -52,6 +57,16 @@ public class TouchManager : MonoBehaviour
 
     private void StartTouchPrimary(InputAction.CallbackContext ctx)
     {
+        // Try to cast the interface wrapper of the current camera as base, which has transform 
+        if (_cmBrain.ActiveVirtualCamera is CinemachineVirtualCameraBase activeCameraBase)
+        {
+            _activeCameraPos = activeCameraBase.transform;
+        }
+        else
+        {
+            Debug.LogError("[ERROR]: Casting of active virtual camera as a base failed.");
+        }
+        
         Vector2 touchInWorldPos = Utils.ScreenToWorld(_inputSystem.Touch.PrimaryPosition.ReadValue<Vector2>(), _mainCamera);
         if (OnStartTouch != null) OnStartTouch(touchInWorldPos, (float)ctx.startTime);
     }
