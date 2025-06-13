@@ -67,14 +67,16 @@ public class TouchManager : MonoBehaviour
             Debug.LogError("[ERROR]: Casting of active virtual camera as a base failed.");
         }
         
-        Vector2 touchInWorldPos = Utils.ScreenToWorld(_inputSystem.Touch.PrimaryPosition.ReadValue<Vector2>(), _mainCamera);
-        if (OnStartTouch != null) OnStartTouch(touchInWorldPos, (float)ctx.startTime);
+        //Vector2 touchInWorldPos = Utils.ScreenToWorld(_inputSystem.Touch.PrimaryPosition.ReadValue<Vector2>(), _mainCamera);
+        Vector2 touchInScreenPos = _inputSystem.Touch.PrimaryPosition.ReadValue<Vector2>();
+        if (OnStartTouch != null) OnStartTouch(touchInScreenPos, (float)ctx.startTime);
     }
 
     private void EndTouchPrimary(InputAction.CallbackContext ctx)
     {
-        Vector2 touchInWorldPos = Utils.ScreenToWorld(_inputSystem.Touch.PrimaryPosition.ReadValue<Vector2>(), _mainCamera);
-        if (OnEndTouch != null) OnEndTouch(touchInWorldPos, (float)ctx.time);
+        //Vector2 touchInWorldPos = Utils.ScreenToWorld(_inputSystem.Touch.PrimaryPosition.ReadValue<Vector2>(), _mainCamera);
+        Vector2 touchInScreenPos = _inputSystem.Touch.PrimaryPosition.ReadValue<Vector2>();
+        if (OnEndTouch != null) OnEndTouch(touchInScreenPos, (float)ctx.time);
     }
 
     public Vector2 PrimaryTouchPosition()

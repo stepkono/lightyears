@@ -34,7 +34,7 @@ public class PlanetManager : MonoBehaviour
             CinemachineCamera cam = GetComponentInChildren<CinemachineCamera>();
             if (cam != null)
             {
-                cam.Priority = 2;
+                cam.Priority = 2; // TODO has to be 1 
             }
             else
             {

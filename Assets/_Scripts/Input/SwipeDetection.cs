@@ -15,6 +15,7 @@ public class SwipeDetection : MonoBehaviour
     [SerializeField] private float _MaxTime;
     [SerializeField] private float _MinDistance;
     [SerializeField] private CinemachineCamera _topDownCamera;
+    [SerializeField] private CinemachineCamera _mainSceneCamera;
 
     private TouchManager _touchManager;
 
@@ -96,20 +97,15 @@ public class SwipeDetection : MonoBehaviour
             case Direction.UP:
             {
                 Debug.Log("Swipe UP");
-                _topDownCamera.GetComponent<CinemachineCamera>().Priority = 2; 
+                _mainSceneCamera.GetComponent<CinemachineCamera>().Priority = 0;
+                _topDownCamera.GetComponent<CinemachineCamera>().Priority = 1; 
                 break;
             }
             case Direction.DOWN:
             {
                 Debug.Log("Swipe DOWN");
-                if (Camera.main != null)
-                {
-                    Camera.main.GetComponent<CinemachineCamera>().Priority = 2;
-                }
-                else
-                {
-                    Debug.LogError("[ERROR]: No main camera found");
-                }
+                _topDownCamera.GetComponent<CinemachineCamera>().Priority = 0; 
+                _mainSceneCamera.GetComponent<CinemachineCamera>().Priority = 1;
                 break;
             }
             case Direction.LEFT: Debug.Log("Swipe LEFT"); break;
