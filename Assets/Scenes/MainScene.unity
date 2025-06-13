@@ -276,6 +276,8 @@ GameObject:
   - component: {fileID: 349665378}
   - component: {fileID: 349665377}
   - component: {fileID: 349665379}
+  - component: {fileID: 349665381}
+  - component: {fileID: 349665380}
   m_Layer: 0
   m_Name: TouchManager
   m_TagString: Untagged
@@ -322,7 +324,7 @@ Transform:
   m_GameObject: {fileID: 349665376}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 712.0034, y: 1492.1222, z: 0}
+  m_LocalPosition: {x: 386.8, y: 1672, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -341,6 +343,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentCamera: {fileID: 871058174}
+--- !u!114 &349665380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 349665376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dbfeb99fb0c8431fa56ed4c8cb8ef16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _MaxTime: 1
+  _MinDistance: 0.2
+--- !u!114 &349665381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 349665376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7265626ff533a46478b1481bd74b172b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &742850717
 GameObject:
   m_ObjectHideFlags: 0
@@ -550,21 +578,41 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3904454038030253633, guid: 27bba7ce1b86941caa0d70d474a68e10, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 6976089287087691312, guid: d1eef9e5ad09742f5960ef3d03bc4d47, type: 2}
+    - target: {fileID: 3904454038030253633, guid: 27bba7ce1b86941caa0d70d474a68e10, type: 3}
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
+    - target: {fileID: 4485274927375273215, guid: 27bba7ce1b86941caa0d70d474a68e10, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 6976089287087691312, guid: d1eef9e5ad09742f5960ef3d03bc4d47, type: 2}
     - target: {fileID: 4485274927375273215, guid: 27bba7ce1b86941caa0d70d474a68e10, type: 3}
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
     - target: {fileID: 6694128959264688496, guid: 27bba7ce1b86941caa0d70d474a68e10, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 6976089287087691312, guid: d1eef9e5ad09742f5960ef3d03bc4d47, type: 2}
+    - target: {fileID: 6694128959264688496, guid: 27bba7ce1b86941caa0d70d474a68e10, type: 3}
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
     - target: {fileID: 8046410860898851323, guid: 27bba7ce1b86941caa0d70d474a68e10, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 7246292233036583868, guid: c2d11b5268c78422092affaca63f3640, type: 2}
+    - target: {fileID: 8046410860898851323, guid: 27bba7ce1b86941caa0d70d474a68e10, type: 3}
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
+    - target: {fileID: 8371632381368341942, guid: 27bba7ce1b86941caa0d70d474a68e10, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 6976089287087691312, guid: d1eef9e5ad09742f5960ef3d03bc4d47, type: 2}
     - target: {fileID: 8371632381368341942, guid: 27bba7ce1b86941caa0d70d474a68e10, type: 3}
       propertyPath: m_TextStyleHashCode
       value: -1183493901
@@ -573,6 +621,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8794414439097862562, guid: 27bba7ce1b86941caa0d70d474a68e10, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 6976089287087691312, guid: d1eef9e5ad09742f5960ef3d03bc4d47, type: 2}
     - target: {fileID: 8794414439097862562, guid: 27bba7ce1b86941caa0d70d474a68e10, type: 3}
       propertyPath: m_TextStyleHashCode
       value: -1183493901
