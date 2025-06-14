@@ -2,18 +2,15 @@ using UnityEngine;
 
 public class ButtonsManager : MonoBehaviour
 {
+    [SerializeField] private GameObject controller;
+    
     public void CreateNewHobby()
     {
-        Debug.Log("[DEBUG]: Clicked create new hobby.");
-        var planetPrefab = Resources.Load<GameObject>("PlanetContainer");
-        if (planetPrefab != null)
-        {
-            GameObject planet = Instantiate(planetPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-            Debug.Log("[DEBUG]: Created new planet.");
-        }
-        else
-        {
-            Debug.Log("[ERROR]: Planet Prefab is null.");
-        }
+        HobbyData hobbyData = new HobbyData();
+        hobbyData.SetName("HobbyTest");
+        hobbyData.SetDaysFrequency(3);
+        
+        if (controller == null) { Debug.LogError("No controller assigned!"); return; }
+        controller.GetComponent<Controller>().SaveNewHobby(hobbyData);
     }
 }

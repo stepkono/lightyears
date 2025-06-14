@@ -9,6 +9,7 @@ public class HobbyManager : MonoBehaviour
     private float _orbitRadius;
     private Vector3 _planetContainerTransform;
     private float _degPerSecond;
+    private int _rang; 
     /*-----------------HOBBY METADATA----------------*/
     private float _executionFrequency;
     // 
@@ -24,7 +25,7 @@ public class HobbyManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        SetFrequency(0.00042f);
+        SetRotationSpeed(0.00042f);
     }
 
     // Update is called once per frame
@@ -33,8 +34,28 @@ public class HobbyManager : MonoBehaviour
         transform.Rotate(0, _degPerSecond * Time.deltaTime * Utils.TIMESCALER, 0);
     }
 
-    public void SetFrequency(float daysFrequency)
+    public void SetRotationSpeed(float daysFrequency)
     {
         _degPerSecond = -360f / (daysFrequency * 24 * 60 * 60);
+    }
+
+    public void SetOrbitRadius(float radius)
+    {
+        
+    }
+
+    public float GetRotationSpeed()
+    {
+        return _degPerSecond;
+    }
+
+    public void UpdateRang(int rang)
+    {
+        _rang = rang;
+        
+        // Update the scale of the orbit
+        _orbitContainer.localScale = _orbitContainer.localScale + new Vector3(0.5f, 0.5f, 0.5f) * _rang;
+        // Update the distance of planet from orbit center 
+        
     }
 }
