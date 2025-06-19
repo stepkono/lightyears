@@ -26,7 +26,7 @@ public class CamerasManager : MonoBehaviour
             }
             mainCamera = Camera.main;
             _currentCamera = mainViewCamera;
-            _currentCamera.Priority = 2; 
+            _currentCamera.Priority = 1; 
         }
         else
         {
@@ -42,7 +42,7 @@ public class CamerasManager : MonoBehaviour
     public void SetCurrentCamera(CinemachineCamera newCamera)
     {
         _currentCamera.Priority = 0; 
-        newCamera.Priority = 1;
+        newCamera.Priority = 2;
         _currentCamera = newCamera;
     }
 

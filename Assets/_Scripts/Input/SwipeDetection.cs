@@ -174,7 +174,7 @@ public class SwipeDetection : MonoBehaviour
             case Direction.UP:
             {
                 Debug.Log("Swipe UP");
-                _camerasManager.SetCurrentCamera(_topDownCamera);
+                _camerasManager.SetCurrentCamera(_mainSceneCamera);
                 //_mainSceneCamera.GetComponent<CinemachineCamera>().Priority = 0;
                 //_topDownCamera.GetComponent<CinemachineCamera>().Priority = 1;
                 break;
@@ -182,7 +182,7 @@ public class SwipeDetection : MonoBehaviour
             case Direction.DOWN:
             {
                 Debug.Log("Swipe DOWN");
-                _camerasManager.SetCurrentCamera(_mainSceneCamera);
+                _camerasManager.SetCurrentCamera(_topDownCamera);
                 //_topDownCamera.GetComponent<CinemachineCamera>().Priority = 0;
                 //_mainSceneCamera.GetComponent<CinemachineCamera>().Priority = 1;
                 break;
