@@ -274,6 +274,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2104689069367714566}
   - component: {fileID: 1380260578852302179}
+  - component: {fileID: 2697639949795850642}
   m_Layer: 0
   m_Name: PlanetContainer
   m_TagString: Untagged
@@ -310,6 +311,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0056e801bfbab45699131378d429b9cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!135 &2697639949795850642
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3842137772611486917}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.4
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4193672597406884211
 GameObject:
   m_ObjectHideFlags: 0
@@ -410,12 +432,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4710985452563065428}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 5036488460661686128}
+  m_Father: {fileID: 1937306494838738254}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!212 &3684826990545281509
 SpriteRenderer:
@@ -481,7 +503,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3415712225229009105}
-  - component: {fileID: 7968611493024500153}
   m_Layer: 0
   m_Name: PlanetRoot
   m_TagString: Untagged
@@ -509,27 +530,6 @@ Transform:
   - {fileID: 4678427268680501717}
   m_Father: {fileID: 2104689069367714566}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &7968611493024500153
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5488111925276683624}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.4
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6112243485881066635
 GameObject:
   m_ObjectHideFlags: 0
@@ -539,6 +539,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5036488460661686128}
+  - component: {fileID: 5425651119803513180}
   m_Layer: 0
   m_Name: OrbitContainer
   m_TagString: Untagged
@@ -559,10 +560,21 @@ Transform:
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 5086874209809252088}
   - {fileID: 1937306494838738254}
   m_Father: {fileID: 3036919941588765231}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!210 &5425651119803513180
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6112243485881066635}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
 --- !u!1 &7296752359018728605
 GameObject:
   m_ObjectHideFlags: 0
@@ -678,7 +690,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 1
-  m_Children: []
+  m_Children:
+  - {fileID: 5086874209809252088}
   m_Father: {fileID: 5036488460661686128}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!331 &3221724529597679787

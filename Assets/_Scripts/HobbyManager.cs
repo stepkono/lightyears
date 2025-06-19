@@ -6,7 +6,7 @@ public class HobbyManager : MonoBehaviour
     private Transform _orbitContainer;
     private Transform _planetContainer;
     /*--------------TECHNICAL METADATA---------------*/
-    private float _orbitRadius;
+    private Vector3 _orbitRadius;
     private Vector3 _planetContainerTransform;
     private float _degPerSecond;
     private int _rang; 
@@ -19,7 +19,7 @@ public class HobbyManager : MonoBehaviour
         _orbitContainer = transform.Find("OrbitContainer");
         _planetContainer = transform.Find("PlanetContainer");
 
-        _orbitRadius = _orbitContainer.localScale.x; 
+        _orbitRadius = _orbitContainer.localScale; 
     }
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -54,8 +54,8 @@ public class HobbyManager : MonoBehaviour
         _rang = rang;
         
         // Update the scale of the orbit
-        _orbitContainer.localScale = _orbitContainer.localScale + new Vector3(0.5f, 0.5f, 0.5f) * _rang;
+        _orbitContainer.localScale = new Vector3(4f, 4f, 4f) + new Vector3(2f, 2f, 2f) * _rang;
         // Update the distance of planet from orbit center 
-        
+        _planetContainer.localPosition = _planetContainer.localPosition.normalized * _orbitContainer.localScale.x * 2f;
     }
 }

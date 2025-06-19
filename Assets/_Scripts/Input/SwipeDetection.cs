@@ -7,13 +7,18 @@ using Color = UnityEngine.Color;
 
 enum Direction
 {
-    UP, DOWN, LEFT, RIGHT
+    UP,
+    DOWN,
+    LEFT,
+    RIGHT
 }
 
 public class SwipeDetection : MonoBehaviour
 {
-    [SerializeField] private float _MaxTime;
-    [SerializeField] private float _MinDistance;
+    [SerializeField] private float maxTapTime;
+    [SerializeField] private float minLongPressTime;
+    [SerializeField] private float maxSwipeTime;
+    [SerializeField] private float minSwipeDistance;
     [SerializeField] private CinemachineCamera _topDownCamera;
     [SerializeField] private CinemachineCamera _mainSceneCamera;
 
@@ -24,9 +29,17 @@ public class SwipeDetection : MonoBehaviour
     private float _startTime;
     private float _endTime;
 
+    private Camera _mainCamera;
+    private CinemachineBrain _cmBrain;
+    private Transform _activeCameraPos;
+
     private void Awake()
     {
         _touchManager = TouchManager.Instance;
+
+        if (Camera.main == null) return;
+        _cmBrain = Camera.main.GetComponent<CinemachineBrain>();
+        _mainCamera = Camera.main;
     }
 
     /*-------------SUB TO INPUT EVENTS--------------*/
@@ -53,10 +66,72 @@ public class SwipeDetection : MonoBehaviour
     {
         _endPosition = endPos;
         _endTime = endTime;
-        DetectSwipe();
+        DetectAction();
     }
 
-    private void DetectSwipe()
+    private void DetectAction()
+    {
+        float actionTime = _endTime - _startTime;
+        Vector2 swipeDirection = _endPosition - _startPosition;
+        float swipeDistance = swipeDirection.magnitude;
+
+        if (actionTime <= maxTapTime && swipeDistance < minSwipeDistance)
+        {
+            ExecuteTap();
+        }
+        else if (actionTime >= minLongPressTime && swipeDistance < minSwipeDistance)
+        {
+            ExecuteLongPress();
+        }
+        else if (swipeDistance >= minSwipeDistance && actionTime <= maxSwipeTime)
+        {
+            ExecuteSwipe();
+        }
+        else if (actionTime >= maxSwipeTime)
+        {
+            ExecuteDrag();
+        }
+    }
+
+    private void ExecuteLongPress()
+    {
+        Debug.Log("[INFO]: Executing long press...");
+    }
+
+    private void ExecuteTap()
+    {
+        Debug.Log("[INFO]: Executing tap...");
+
+        if (_mainCamera != null)
+        {
+            Ray ray = _mainCamera.ScreenPointToRay(_startPosition);
+            if (Physics.Raycast(ray, out RaycastHit hit))
+            {
+                var planet = hit.collider.GetComponent<PlanetManager>();
+                if (planet != null)
+                {
+                    Debug.Log("Planet hit.");
+                    planet.OnTouch();
+                }
+            }
+            else
+            {
+                Debug.Log("Free tap");
+                _mainSceneCamera.GetComponent<CinemachineCamera>().Priority = 3;
+            }
+        }
+        else
+        {
+            Debug.Log("No main camera found");
+        }
+    }
+
+    private void ExecuteDrag()
+    {
+        Debug.Log("[INFO]: Executing drag...");
+    }
+
+    private void ExecuteSwipe()
     {
         float swipeTime = _endTime - _startTime;
         Vector2 swipeDirection = _endPosition - _startPosition;
@@ -65,15 +140,15 @@ public class SwipeDetection : MonoBehaviour
         Debug.Log("Checking swipe...");
         Debug.Log("Distance: " + swipeDistance);
         Debug.Log("Time: " + swipeTime);
-        if (swipeDistance >= _MinDistance && swipeTime <= _MaxTime)
+        if (swipeDistance >= minSwipeDistance && swipeTime <= maxSwipeTime)
         {
             Debug.Log("Swipe DETECTED.");
             Debug.Log("Startpos: " + _startPosition);
             Debug.Log("Endpos: " + _endPosition);
             Debug.DrawLine(_startPosition, _endPosition, Color.green, 5f);
-            
-            float verticalBias = Vector2.Dot( Vector2.up, swipeDirection.normalized);
-            float horizontalBias = Vector2.Dot( Vector2.right, swipeDirection.normalized);
+
+            float verticalBias = Vector2.Dot(Vector2.up, swipeDirection.normalized);
+            float horizontalBias = Vector2.Dot(Vector2.right, swipeDirection.normalized);
             Direction coreDirection;
 
             // Find out if the x or y axes are dominant 
@@ -85,7 +160,7 @@ public class SwipeDetection : MonoBehaviour
             {
                 coreDirection = horizontalBias > 0 ? Direction.RIGHT : Direction.LEFT;
             }
-            
+
             switchCamera(coreDirection);
         }
     }
@@ -98,13 +173,13 @@ public class SwipeDetection : MonoBehaviour
             {
                 Debug.Log("Swipe UP");
                 _mainSceneCamera.GetComponent<CinemachineCamera>().Priority = 0;
-                _topDownCamera.GetComponent<CinemachineCamera>().Priority = 1; 
+                _topDownCamera.GetComponent<CinemachineCamera>().Priority = 1;
                 break;
             }
             case Direction.DOWN:
             {
                 Debug.Log("Swipe DOWN");
-                _topDownCamera.GetComponent<CinemachineCamera>().Priority = 0; 
+                _topDownCamera.GetComponent<CinemachineCamera>().Priority = 0;
                 _mainSceneCamera.GetComponent<CinemachineCamera>().Priority = 1;
                 break;
             }
