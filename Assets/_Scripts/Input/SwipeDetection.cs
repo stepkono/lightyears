@@ -119,7 +119,7 @@ public class SwipeDetection : MonoBehaviour
             else
             {
                 Debug.Log("Free tap");
-                _mainSceneCamera.GetComponent<CinemachineCamera>().Priority = 3;
+                _camerasManager.SetCurrentCamera(_mainSceneCamera);
             }
         }
         else

@@ -5,9 +5,11 @@ using UnityEngine;
 public class PlanetManager : MonoBehaviour
 {
     private int _visibleIndex = 1;
+    private CamerasManager _camerasManager; 
 
     void Awake()
     {
+        _camerasManager = CamerasManager.GetInstance();
         var planetIndex = 1; 
         foreach (Transform child in transform)
         {
@@ -31,19 +33,19 @@ public class PlanetManager : MonoBehaviour
         if (planetCam != null)
         {
             //CinemachineCamera cam = planetCam.GetComponent<CinemachineCamera>();;
-            CinemachineCamera cam = GetComponentInChildren<CinemachineCamera>();
-            if (cam != null)
+            CinemachineCamera cmPlanetCamera = GetComponentInChildren<CinemachineCamera>();
+            if (cmPlanetCamera != null)
             {
-                cam.Priority = 2; // TODO has to be 1 
+                 _camerasManager.SetCurrentCamera(cmPlanetCamera);
             }
             else
             {
-                Debug.Log("[DEBUG]: Planet cam component is null");
+                Debug.Log("[WARNING]: Planet CM camera component is null");
             }
         }
         else
         {
-            Debug.Log("[DEBUG]: Planet cam is null");
+            Debug.Log("[WARNING]: Planet camera is null");
         }
     }
 }

@@ -320,7 +320,6 @@ GameObject:
   m_Component:
   - component: {fileID: 349665378}
   - component: {fileID: 349665377}
-  - component: {fileID: 349665379}
   - component: {fileID: 349665381}
   - component: {fileID: 349665380}
   m_Layer: 0
@@ -375,19 +374,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1394503890}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &349665379
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 349665376}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9f7bb5cbada4481ea18fbde2f9d9bfa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentCamera: {fileID: 871058174}
 --- !u!114 &349665380
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -403,7 +389,7 @@ MonoBehaviour:
   maxTapTime: 0.2
   minLongPressTime: 0.5
   maxSwipeTime: 1
-  minSwipeDistance: 0.2
+  minSwipeDistance: 15
   _topDownCamera: {fileID: 1823718602}
   _mainSceneCamera: {fileID: 1053326608}
 --- !u!114 &349665381
