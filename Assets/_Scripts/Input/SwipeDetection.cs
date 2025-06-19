@@ -32,10 +32,12 @@ public class SwipeDetection : MonoBehaviour
     private Camera _mainCamera;
     private CinemachineBrain _cmBrain;
     private Transform _activeCameraPos;
+    private CamerasManager _camerasManager;
 
     private void Awake()
     {
         _touchManager = TouchManager.Instance;
+        _camerasManager = CamerasManager.GetInstance();
 
         if (Camera.main == null) return;
         _cmBrain = Camera.main.GetComponent<CinemachineBrain>();
@@ -161,26 +163,28 @@ public class SwipeDetection : MonoBehaviour
                 coreDirection = horizontalBias > 0 ? Direction.RIGHT : Direction.LEFT;
             }
 
-            switchCamera(coreDirection);
+            SwitchCamera(coreDirection);
         }
     }
 
-    private void switchCamera(Direction swipeDirection)
+    private void SwitchCamera(Direction swipeDirection)
     {
         switch (swipeDirection)
         {
             case Direction.UP:
             {
                 Debug.Log("Swipe UP");
-                _mainSceneCamera.GetComponent<CinemachineCamera>().Priority = 0;
-                _topDownCamera.GetComponent<CinemachineCamera>().Priority = 1;
+                _camerasManager.SetCurrentCamera(_topDownCamera);
+                //_mainSceneCamera.GetComponent<CinemachineCamera>().Priority = 0;
+                //_topDownCamera.GetComponent<CinemachineCamera>().Priority = 1;
                 break;
             }
             case Direction.DOWN:
             {
                 Debug.Log("Swipe DOWN");
-                _topDownCamera.GetComponent<CinemachineCamera>().Priority = 0;
-                _mainSceneCamera.GetComponent<CinemachineCamera>().Priority = 1;
+                _camerasManager.SetCurrentCamera(_mainSceneCamera);
+                //_topDownCamera.GetComponent<CinemachineCamera>().Priority = 0;
+                //_mainSceneCamera.GetComponent<CinemachineCamera>().Priority = 1;
                 break;
             }
             case Direction.LEFT: Debug.Log("Swipe LEFT"); break;

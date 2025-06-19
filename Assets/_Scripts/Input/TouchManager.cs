@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,11 +9,10 @@ using UnityEngine.UI;
 public class TouchManager : MonoBehaviour
 {
     public static TouchManager Instance { get; private set; }
+    [SerializeField] private CinemachineCamera mainSceneCamera;
     
     private InputSystem _inputSystem;
-    private Camera _mainCamera;
-    private CinemachineBrain _cmBrain;
-    private Transform _activeCameraPos; 
+    private bool _firstTouch = true;
     
     #region Events
     public delegate void StartTouch(Vector2 position, float startedTime);
@@ -28,10 +28,8 @@ public class TouchManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
             
+            /*SETUP*/
             _inputSystem = new InputSystem();
-            
-            _cmBrain = Camera.main.GetComponent<CinemachineBrain>();
-            _mainCamera = Camera.main;
         }
         else
         {
@@ -51,37 +49,40 @@ public class TouchManager : MonoBehaviour
 
     void Start()
     {
-        _inputSystem.Touch.PrimaryContact.started += ctx => StartTouchPrimary(ctx);
-        _inputSystem.Touch.PrimaryContact.canceled += ctx => EndTouchPrimary(ctx);
+        _inputSystem.UI.InitialTouchSetup.started += ctx => StartTouchPrimary(ctx);
+        _inputSystem.UI.InitialTouchSetup.canceled += ctx => EndTouchPrimary(ctx);
+        //_inputSystem.Touch.PrimaryContact.started += ctx => StartTouchPrimary(ctx);
+        //_inputSystem.Touch.PrimaryContact.canceled += ctx => EndTouchPrimary(ctx);
     }
 
     private void StartTouchPrimary(InputAction.CallbackContext ctx)
     {
-        // Try to cast the interface wrapper of the current camera as base, which has transform 
-        if (_cmBrain.ActiveVirtualCamera is CinemachineVirtualCameraBase activeCameraBase)
+        //Vector2 touchInWorldPos = Utils.ScreenToWorld(_inputSystem.Touch.PrimaryPosition.ReadValue<Vector2>(), _mainCamera);
+        Vector2 touchInScreenPos;
+        if (_firstTouch)
         {
-            _activeCameraPos = activeCameraBase.transform;
+            touchInScreenPos = ctx.ReadValue<Vector2>();
+            _firstTouch = false;
         }
         else
         {
-            Debug.LogError("[ERROR]: Casting of active virtual camera as a base failed.");
+            touchInScreenPos = _inputSystem.UI.PrimaryPosition.ReadValue<Vector2>();
         }
-        
-        //Vector2 touchInWorldPos = Utils.ScreenToWorld(_inputSystem.Touch.PrimaryPosition.ReadValue<Vector2>(), _mainCamera);
-        Vector2 touchInScreenPos = _inputSystem.Touch.PrimaryPosition.ReadValue<Vector2>();
+        Debug.Log("[INFO]: START TOUCH: " + touchInScreenPos.x + " - " + touchInScreenPos.y);
         if (OnStartTouch != null) OnStartTouch(touchInScreenPos, (float)ctx.startTime);
     }
 
     private void EndTouchPrimary(InputAction.CallbackContext ctx)
     {
         //Vector2 touchInWorldPos = Utils.ScreenToWorld(_inputSystem.Touch.PrimaryPosition.ReadValue<Vector2>(), _mainCamera);
-        Vector2 touchInScreenPos = _inputSystem.Touch.PrimaryPosition.ReadValue<Vector2>();
+        Vector2 touchInScreenPos = _inputSystem.UI.PrimaryPosition.ReadValue<Vector2>();
+        Debug.Log("[INFO]: END TOUCH: " + touchInScreenPos.x + " - " + touchInScreenPos.y);
         if (OnEndTouch != null) OnEndTouch(touchInScreenPos, (float)ctx.time);
     }
 
-    public Vector2 PrimaryTouchPosition()
+    /*public Vector2 PrimaryTouchPosition()
     {
-        return Utils.ScreenToWorld(_inputSystem.Touch.PrimaryPosition.ReadValue<Vector2>(), _mainCamera);
-    }
+        //return Utils.ScreenToWorld(_inputSystem.UI.PrimaryPosition.ReadValue<Vector2>(), _mainCamera);
+    }*/
      
-}
+} 

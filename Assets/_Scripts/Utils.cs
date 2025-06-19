@@ -9,7 +9,7 @@ public class Utils : MonoBehaviour
     {
         if (_canvas == null)
         {
-            _canvas = FindObjectOfType<Canvas>();
+            _canvas = FindFirstObjectByType<Canvas>();
         }
         
         float canvasDistance = Vector3.Distance(camera.transform.position, _canvas.transform.position);
