@@ -4,7 +4,7 @@ public class ButtonsManager : MonoBehaviour
 {
     [SerializeField] private GameObject controller;
     
-    public void CreateNewHobby()
+    public void CreateNewPlanet()
     {
         HobbyData hobbyData = new HobbyData();
         hobbyData.SetName("HobbyTest");
@@ -12,5 +12,11 @@ public class ButtonsManager : MonoBehaviour
         
         if (controller == null) { Debug.LogError("No controller assigned!"); return; }
         controller.GetComponent<Controller>().SaveNewHobby(hobbyData);
+    }
+
+    public void CreateNewHobby()
+    {
+        if (controller == null) { Debug.LogError("No controller assigned!"); return; }
+        controller.GetComponent<Controller>().CreateNewHobby();
     }
 }

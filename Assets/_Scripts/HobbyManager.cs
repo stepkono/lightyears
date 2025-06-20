@@ -26,7 +26,7 @@ public class HobbyManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        SetRotationSpeed(0.00042f);
+        //SetRotationSpeed(0.00042f);
     }
 
     // Update is called once per frame

@@ -22,6 +22,7 @@ public class SystemManager : MonoBehaviour
     
     public void SaveNewHobby(HobbyData hobbyData)
     {
+        Debug.Log("WRONG METHOD CALLED!");
         var hobbyPrefab = Resources.Load<GameObject>("HobbyContainer");
         if (hobbyPrefab != null)
         {

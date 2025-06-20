@@ -27,10 +27,16 @@ public class HobbyCreator : MonoBehaviour
             return; 
         }
         _currentHobbyPlanet = Instantiate(hobbyPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        Debug.Log("[INFO]: Hobby planet has been instantiated.");
         
         // Set center view camera
-        CinemachineCamera centerCamera = _currentHobbyPlanet.transform.Find("CenterPlanetCamera").GetComponent<CinemachineCamera>();
-        _camerasManager.SetCurrentCamera(centerCamera);
+        Transform centerCamera = _currentHobbyPlanet.transform.Find("PlanetContainer/CenterPlanetCam"); 
+        if (centerCamera == null) 
+        {
+            Debug.Log("[ERROR]: No Center PlanetCamera found.");
+            return; 
+        }
+        _camerasManager.SetCurrentCamera(centerCamera.GetComponent<CinemachineCamera>());
     }
 
     public void SetName(string hobbyName)
