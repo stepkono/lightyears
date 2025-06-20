@@ -60,6 +60,11 @@ public class HobbyManager : MonoBehaviour
         return _hobbyData;
     }
 
+    public Transform GetOrbitContainer()
+    {
+        return _orbitContainer;
+    }
+
     public void UpdateRang(int rang)
     {
         _rang = rang;
