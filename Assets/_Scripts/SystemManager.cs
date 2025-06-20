@@ -11,12 +11,21 @@ public class SystemManager : MonoBehaviour
         _hobbyPlanets = new LinkedList<GameObject>();
     }
 
+    public void SaveNewHobby(HobbyManager hobby)
+    {
+        HobbyData hobbyData = hobby.GetHobbyData();
+        float rotationSpeed = -360f / (hobbyData.GetDaysInterval() * 24 * 60 * 60);
+        hobby.SetRotationSpeed(rotationSpeed);
+        
+        InsertIntoList(hobby.gameObject);
+    }
+    
     public void SaveNewHobby(HobbyData hobbyData)
     {
         var hobbyPrefab = Resources.Load<GameObject>("HobbyContainer");
         if (hobbyPrefab != null)
         {
-            float rotationSpeed = -360f / (hobbyData.GetFrequency() * 24 * 60 * 60);
+            float rotationSpeed = -360f / (hobbyData.GetDaysInterval() * 24 * 60 * 60);
 
             GameObject hobbyPlanet = Instantiate(hobbyPrefab, new Vector3(0, 0, 0), Quaternion.identity);
             hobbyPlanet.GetComponent<HobbyManager>().SetRotationSpeed(rotationSpeed);

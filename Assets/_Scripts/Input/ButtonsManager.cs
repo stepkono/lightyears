@@ -8,7 +8,7 @@ public class ButtonsManager : MonoBehaviour
     {
         HobbyData hobbyData = new HobbyData();
         hobbyData.SetName("HobbyTest");
-        hobbyData.SetDaysFrequency(3);
+        hobbyData.SetDaysInterval(3);
         
         if (controller == null) { Debug.LogError("No controller assigned!"); return; }
         controller.GetComponent<Controller>().SaveNewHobby(hobbyData);

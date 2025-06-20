@@ -5,6 +5,7 @@ public class HobbyManager : MonoBehaviour
     /*--------------------CHILDREN-------------------*/
     private Transform _orbitContainer;
     private Transform _planetContainer;
+    private HobbyData _hobbyData;
     /*--------------TECHNICAL METADATA---------------*/
     private Vector3 _orbitRadius;
     private Vector3 _planetContainerTransform;
@@ -34,6 +35,11 @@ public class HobbyManager : MonoBehaviour
         transform.Rotate(0, _degPerSecond * Time.deltaTime * Utils.TIMESCALER, 0);
     }
 
+    public void SetHobbyData(HobbyData hobbyData)
+    {
+        _hobbyData = hobbyData;
+    }
+    
     public void SetRotationSpeed(float daysFrequency)
     {
         _degPerSecond = -360f / (daysFrequency * 24 * 60 * 60);
@@ -47,6 +53,11 @@ public class HobbyManager : MonoBehaviour
     public float GetRotationSpeed()
     {
         return _degPerSecond;
+    }
+
+    public HobbyData GetHobbyData()
+    {
+        return _hobbyData;
     }
 
     public void UpdateRang(int rang)
