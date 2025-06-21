@@ -54,6 +54,11 @@ public class HobbyCreator : MonoBehaviour
 
     public void SetInterval(int days)
     {
+        if (!_currentHobbyData.IntervalSet)
+        {
+            Debug.LogWarning("[INFO]: Interval has not been activated for this hobby yet.");
+            return; 
+        }
         _currentHobbyData.SetDaysInterval(days);
     }
 

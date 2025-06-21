@@ -2,7 +2,7 @@
 public class HobbyData
 {
     private string _name;
-    private bool _intervalSet = false;
+    public bool IntervalSet { get; private set; } = false; 
     private bool _reminder = false;  
     private int _daysInterval;
 
@@ -17,11 +17,11 @@ public class HobbyData
     }
     public void ActivateInterval()
     {
-        _intervalSet = true;
+        IntervalSet = true;
     }
     public void SwitchReminder()
     {
-        if (_intervalSet && _reminder == false)
+        if (IntervalSet && _reminder == false)
         {
             _reminder = true;
         }

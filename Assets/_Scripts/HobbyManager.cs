@@ -42,7 +42,7 @@ public class HobbyManager : MonoBehaviour
     
     public void SetRotationSpeed(float daysFrequency)
     {
-        _degPerSecond = -360f / (daysFrequency * 24 * 60 * 60);
+        _degPerSecond = daysFrequency;
     }
 
     public void SetOrbitRadius(float radius)

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Utils : MonoBehaviour
 {
-    public static float TIMESCALER = 1; 
+    public static float TIMESCALER = 10000; 
     private static Canvas _canvas; 
     
     public static Vector3 ScreenToWorld(Vector3 screenPosition, Camera camera)

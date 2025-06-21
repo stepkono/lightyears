@@ -11,6 +11,14 @@ public class Controller : MonoBehaviour
     [SerializeField] private GameObject systemManager;
     [SerializeField] private GameObject hobbyCreator;
     [SerializeField] private GameObject globalVolume;
+    
+    #region Events
+
+    public delegate void SaveHobby();
+
+    public event SaveHobby OnSaveHobby;
+
+    #endregion
 
     private ViewsManager _viewsManager; 
     
@@ -22,6 +30,7 @@ public class Controller : MonoBehaviour
             DontDestroyOnLoad(transform.root.gameObject);
             
             _viewsManager = ViewsManager.Instance;
+            Debug.Log("INSTANCE CONTROLLER ID: " + Instance.GetInstanceID());
         }
         else
         {
@@ -45,6 +54,7 @@ public class Controller : MonoBehaviour
     
     public void SaveCurrentHobby()
     {
+        OnSaveHobby?.Invoke();
         hobbyCreator.GetComponent<HobbyCreator>().SaveCurrentHobby();
     }
 }
