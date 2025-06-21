@@ -4,7 +4,7 @@ using UnityEngine;
 public class HobbyCreator : MonoBehaviour
 {
     [SerializeField] private GameObject systemManager; 
-    [SerializeField] private GameObject viewsManager;
+    [SerializeField] private CinemachineCamera mainSceneCamera;
     
     private CamerasManager _camerasManager;
     private SystemManager _systemManager;
@@ -70,6 +70,7 @@ public class HobbyCreator : MonoBehaviour
         _systemManager.SaveNewHobby(_currentHobbyPlanet.GetComponent<HobbyManager>());
         // Switch back to MainView 
         ViewsManager.Instance.DeactivateHobbyCreationView();
+        _camerasManager.SetCurrentCamera(mainSceneCamera);
         
         // Reset contents of this HobbyCreator
         _currentHobbyData = null;

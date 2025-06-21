@@ -21,6 +21,7 @@ public class SwipeDetection : MonoBehaviour
     [SerializeField] private CinemachineCamera _mainSceneCamera;
 
     private TouchManager _touchManager;
+    private ViewsManager _viewsManager;
 
     private Vector2 _startPosition;
     private Vector2 _endPosition;
@@ -36,6 +37,7 @@ public class SwipeDetection : MonoBehaviour
     {
         _touchManager = TouchManager.Instance;
         _camerasManager = CamerasManager.GetInstance();
+        _viewsManager = ViewsManager.Instance;
 
         if (Camera.main == null) return;
         _cmBrain = Camera.main.GetComponent<CinemachineBrain>();
@@ -111,12 +113,17 @@ public class SwipeDetection : MonoBehaviour
                 if (planet != null)
                 {
                     Debug.Log("Planet hit.");
-                    planet.OnTouch();
+                    _viewsManager.ActivatePlanetDetailView(planet);
                 }
             }
             else
             {
                 Debug.Log("Free tap");
+                
+                if (_viewsManager.CurrentActiveView != null)
+                {
+                    _viewsManager.DeactivateCurrentView(); 
+                }
                 _camerasManager.SetCurrentCamera(_mainSceneCamera);
             }
         }
@@ -172,6 +179,11 @@ public class SwipeDetection : MonoBehaviour
             case Direction.UP:
             {
                 Debug.Log("Swipe UP");
+                
+                if (_viewsManager.CurrentActiveView != null)
+                {
+                    _viewsManager.DeactivateCurrentView(); 
+                }
                 _camerasManager.SetCurrentCamera(_mainSceneCamera);
                 //_mainSceneCamera.GetComponent<CinemachineCamera>().Priority = 0;
                 //_topDownCamera.GetComponent<CinemachineCamera>().Priority = 1;
@@ -180,6 +192,11 @@ public class SwipeDetection : MonoBehaviour
             case Direction.DOWN:
             {
                 Debug.Log("Swipe DOWN");
+                
+                if (_viewsManager.CurrentActiveView != null)
+                {
+                    _viewsManager.DeactivateCurrentView(); 
+                }
                 _camerasManager.SetCurrentCamera(_topDownCamera);
                 //_topDownCamera.GetComponent<CinemachineCamera>().Priority = 0;
                 //_mainSceneCamera.GetComponent<CinemachineCamera>().Priority = 1;

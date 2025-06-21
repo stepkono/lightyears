@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -12,9 +13,14 @@ public class ViewsManager : MonoBehaviour
     private CamerasManager _camerasManager;
     
     /*References to UI-GameObjects*/ 
+    // View -> Hobby Creation
     [SerializeField] private GameObject hobbyCreationView; 
     [SerializeField] private GameObject backgroundGradient;
     [SerializeField] private GameObject systemUserName;
+    // View -> Planet Details
+    [SerializeField] private GameObject viewPlanetDetails;
+    
+    public GameObject CurrentActiveView { get; private set; }
 
     #region Events
 
@@ -39,9 +45,46 @@ public class ViewsManager : MonoBehaviour
         }
     }
 
+    public void ActivatePlanetDetailView(PlanetManager planet) 
+    {
+        planet.OnTouch();
+        
+        HobbyData hobbyData = planet.GetComponentInParent<HobbyManager>().GetHobbyData();
+        var hobbyName = hobbyData.GetName();
+        var hobbyNameTextField = viewPlanetDetails.transform.Find("HobbyName");
+        hobbyNameTextField.GetComponent<TMP_Text>().text = hobbyName;
+        
+        viewPlanetDetails.SetActive(true);
+
+        CurrentActiveView = viewPlanetDetails;
+    }
+
+    public void DeactivatePlanetDetailView()
+    {
+        viewPlanetDetails.SetActive(false);
+        _camerasManager.SetCurrentCamera(mainSceneCamera);
+
+        CurrentActiveView = null; 
+    }
+
+    public void DeactivateCurrentView()
+    {
+        if (CurrentActiveView == hobbyCreationView)
+        {
+            DeactivateHobbyCreationView();
+        }
+        if (CurrentActiveView == viewPlanetDetails)
+        {
+            DeactivatePlanetDetailView();
+        }
+    }
+
     public void ActivateHobbyCreationView()
     {
+        CurrentActiveView = hobbyCreationView;
+        
         OnHobbyCreationViewActivation?.Invoke(true);
+        
         systemUserName.SetActive(false);
         
         // Slow fade-in anim for hobby creation background 
@@ -51,11 +94,12 @@ public class ViewsManager : MonoBehaviour
     public void DeactivateHobbyCreationView()
     {
         OnHobbyCreationViewActivation?.Invoke(false);
+        
         backgroundGradient.SetActive(false);
         hobbyCreationView.SetActive(false);
-        
-        _camerasManager.SetCurrentCamera(mainSceneCamera);
         systemUserName.SetActive(true);
+        
+        CurrentActiveView = null; 
     } 
     
     IEnumerator ActivateBackgroundAfterDelay(float delay, float from, float to)
