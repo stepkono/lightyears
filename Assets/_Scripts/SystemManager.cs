@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class SystemManager : MonoBehaviour
 {
-    private LinkedList<GameObject> _hobbyPlanets;
+    public LinkedList<GameObject> HobbyPlanets { get; private set; }
 
     private void Awake()
     {
-        _hobbyPlanets = new LinkedList<GameObject>();
+        HobbyPlanets = new LinkedList<GameObject>();
     }
 
     public void SaveNewHobby(HobbyManager hobby)
@@ -26,14 +26,14 @@ public class SystemManager : MonoBehaviour
 
     private void InsertIntoList(GameObject hobbyPlanet)
     {
-        if (_hobbyPlanets.Count == 0)
+        if (HobbyPlanets.Count == 0)
         {
-            _hobbyPlanets.AddFirst(hobbyPlanet);
+            HobbyPlanets.AddFirst(hobbyPlanet);
             Debug.Log("[DEBUG]: SystemManager: List empty. Inserting first planet.");
         }
         else
         {
-            LinkedListNode<GameObject> currentNode = _hobbyPlanets.First;
+            LinkedListNode<GameObject> currentNode = HobbyPlanets.First;
             float currentPlanetRotationSpeed = currentNode.Value.GetComponent<HobbyManager>().GetRotationSpeed();
             float newPlanetRotationSpeed = hobbyPlanet.GetComponent<HobbyManager>().GetRotationSpeed();
 
@@ -46,11 +46,11 @@ public class SystemManager : MonoBehaviour
             
             if (currentNode.Next == null)
             {
-                _hobbyPlanets.AddLast(hobbyPlanet);
+                HobbyPlanets.AddLast(hobbyPlanet);
             }
             else
             {
-                _hobbyPlanets.AddBefore(currentNode, hobbyPlanet);
+                HobbyPlanets.AddBefore(currentNode, hobbyPlanet);
             }
             
             UpdateOrbits();
@@ -61,7 +61,7 @@ public class SystemManager : MonoBehaviour
     {
         int rang = 0; 
         
-        foreach (GameObject hobbyPlanet in _hobbyPlanets)
+        foreach (GameObject hobbyPlanet in HobbyPlanets)
         {
             hobbyPlanet.GetComponent<HobbyManager>().UpdateRang(rang);
             ++rang; 

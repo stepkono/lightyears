@@ -50,6 +50,21 @@ public class HobbyManager : MonoBehaviour
         
     }
 
+    public void DeactivateRendering()
+    {
+        foreach (Transform planet in _planetContainer.Find("PlanetRoot"))
+        {
+            planet.gameObject.GetComponent<MeshRenderer>().enabled = false;
+        }
+    }
+    public void ActivateRendering()
+    {
+        foreach (Transform planet in _planetContainer.Find("PlanetRoot"))
+        {
+            planet.gameObject.GetComponent<MeshRenderer>().enabled = true;
+        }
+    }
+
     public float GetRotationSpeed()
     {
         return _degPerSecond;
