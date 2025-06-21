@@ -2,7 +2,7 @@ using System;
 using Unity.Cinemachine;
 using UnityEngine;
 
-[DefaultExecutionOrder(-2)] // So that this script runs before all the other ones
+[DefaultExecutionOrder(-3)] // So that this script runs before all the other ones
 public class CamerasManager : MonoBehaviour
 {
     [SerializeField] private Camera mainCamera;
@@ -17,7 +17,7 @@ public class CamerasManager : MonoBehaviour
         if (INSTANCE == null)
         {
             INSTANCE = this; 
-            DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(transform.root.gameObject);
             
             if (mainCamera == null)
             {

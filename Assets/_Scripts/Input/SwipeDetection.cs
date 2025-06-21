@@ -1,8 +1,6 @@
 using System;
 using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.Serialization;
-using UnityFigmaBridge.Editor.FigmaApi;
 using Color = UnityEngine.Color;
 
 enum Direction

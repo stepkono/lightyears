@@ -4,6 +4,8 @@ using UnityEngine;
 public class HobbyCreator : MonoBehaviour
 {
     [SerializeField] private GameObject systemManager; 
+    [SerializeField] private GameObject viewsManager;
+    
     private CamerasManager _camerasManager;
     private SystemManager _systemManager;
     
@@ -42,6 +44,7 @@ public class HobbyCreator : MonoBehaviour
     public void SetName(string hobbyName)
     {
         _currentHobbyData.SetName(hobbyName);
+        Debug.Log("[INFO]: Hobby name has been set to: " + hobbyName);
     }
 
     public void ActivateInterval()
@@ -56,7 +59,15 @@ public class HobbyCreator : MonoBehaviour
 
     public void SaveCurrentHobby()
     {
+        // Save user input data in HobbyData
         _currentHobbyPlanet.GetComponent<HobbyManager>().SetHobbyData(_currentHobbyData);
+        // Pass Hobby over to SystemManager for correct order insertion 
         _systemManager.SaveNewHobby(_currentHobbyPlanet.GetComponent<HobbyManager>());
+        // Switch back to MainView 
+        ViewsManager.Instance.DeactivateHobbyCreationView();
+        
+        // Reset contents of this HobbyCreator
+        _currentHobbyData = null;
+        _currentHobbyPlanet = null;
     }
 }

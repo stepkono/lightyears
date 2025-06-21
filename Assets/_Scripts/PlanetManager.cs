@@ -5,13 +5,16 @@ using UnityEngine;
 public class PlanetManager : MonoBehaviour
 {
     private int _visibleIndex = 1;
-    private CamerasManager _camerasManager; 
+    private CamerasManager _camerasManager;
+    private Transform _planetRoot;
 
     void Awake()
     {
         _camerasManager = CamerasManager.GetInstance();
+        _planetRoot = transform.Find("PlanetRoot");
+        
         var planetIndex = 1; 
-        foreach (Transform child in transform)
+        foreach (Transform child in _planetRoot)
         {
             if (child.GetComponent<CinemachineCamera>() == null)
             {
@@ -19,6 +22,12 @@ public class PlanetManager : MonoBehaviour
             }
             planetIndex++;
         }
+    }
+
+    private void Update()
+    {
+        float degPerSecond = 5; 
+        _planetRoot.transform.Rotate(0, degPerSecond * Time.deltaTime, 0);
     }
 
     public void SetVisibleIndex(int planetIndex)

@@ -13,6 +13,7 @@ public class SystemManager : MonoBehaviour
 
     public void SaveNewHobby(HobbyManager hobby)
     {
+        
         HobbyData hobbyData = hobby.GetHobbyData();
         // Show orbit ring
         hobby.GetOrbitContainer().gameObject.SetActive(true); 
@@ -21,26 +22,6 @@ public class SystemManager : MonoBehaviour
         hobby.SetRotationSpeed(rotationSpeed);
         // Insert into system considering order 
         InsertIntoList(hobby.gameObject);
-    }
-    
-    public void SaveNewHobby(HobbyData hobbyData)
-    {
-        Debug.Log("WRONG METHOD CALLED!");
-        var hobbyPrefab = Resources.Load<GameObject>("HobbyContainer");
-        if (hobbyPrefab != null)
-        {
-            float rotationSpeed = -360f / (hobbyData.GetDaysInterval() * 24 * 60 * 60);
-
-            GameObject hobbyPlanet = Instantiate(hobbyPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-            hobbyPlanet.GetComponent<HobbyManager>().SetRotationSpeed(rotationSpeed);
-            InsertIntoList(hobbyPlanet);
-
-            Debug.Log("[DEBUG]: Created new hobby planet.");
-        }
-        else
-        {
-            Debug.LogError("[ERROR]: HobbyContainer prefab not found.");
-        }
     }
 
     private void InsertIntoList(GameObject hobbyPlanet)
