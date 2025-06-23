@@ -13,7 +13,6 @@ public class SystemManager : MonoBehaviour
 
     public void SaveNewHobby(HobbyManager hobby)
     {
-        
         HobbyData hobbyData = hobby.GetHobbyData();
         // Show orbit ring
         hobby.GetOrbitContainer().gameObject.SetActive(true); 
@@ -42,16 +41,15 @@ public class SystemManager : MonoBehaviour
             {
                 currentNode = currentNode.Next;
                 currentPlanetRotationSpeed = currentNode.Value.GetComponent<HobbyManager>().GetRotationSpeed();
-                newPlanetRotationSpeed = hobbyPlanet.GetComponent<HobbyManager>().GetRotationSpeed();
             }
-            
-            if (currentNode.Next == null)
+
+            if (currentPlanetRotationSpeed < newPlanetRotationSpeed)
             {
-                HobbyPlanets.AddLast(hobbyPlanet);
+                HobbyPlanets.AddBefore(currentNode, hobbyPlanet);    
             }
             else
             {
-                HobbyPlanets.AddBefore(currentNode, hobbyPlanet);
+                HobbyPlanets.AddLast(hobbyPlanet);
             }
             
             UpdateOrbits();
@@ -61,11 +59,15 @@ public class SystemManager : MonoBehaviour
     private void UpdateOrbits()
     {
         int rang = 0; 
-        
+        Debug.Log("[DEBUG]: SystemManger: Updating orbits...");
+        Debug.Log("------------------------------------------------------------------------------");
         foreach (GameObject hobbyPlanet in HobbyPlanets)
         {
+            Debug.Log("[DEBUG]: SystemManager: HOBBY NAME: " + hobbyPlanet.GetComponent<HobbyManager>().GetHobbyData().GetName() + " RANG :" + rang);
+            Debug.Log("[DEBUG]: SystemManager: HOBBY SPEED: " + hobbyPlanet.GetComponent<HobbyManager>().GetRotationSpeed());
             hobbyPlanet.GetComponent<HobbyManager>().UpdateRang(rang);
             ++rang; 
         }
+        Debug.Log("[------------------------------------------------------------------------------");
     }
 }

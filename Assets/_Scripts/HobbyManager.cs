@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class HobbyManager : MonoBehaviour
@@ -67,7 +68,7 @@ public class HobbyManager : MonoBehaviour
 
     public float GetRotationSpeed()
     {
-        return _degPerSecond;
+        return Math.Abs(_degPerSecond);
     }
 
     public HobbyData GetHobbyData()
