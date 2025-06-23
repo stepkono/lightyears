@@ -98,6 +98,7 @@ public class ViewsManager : MonoBehaviour
         hobbyNameTextField.GetComponent<TMP_Text>().text = hobbyName;
 
         viewPlanetDetails.SetActive(true);
+        DeactivateViewMain();
 
         CurrentActiveView = viewPlanetDetails;
     }
@@ -107,6 +108,7 @@ public class ViewsManager : MonoBehaviour
         viewPlanetDetails.SetActive(false);
         _camerasManager.SetCurrentCamera(mainSceneCamera);
 
+        ActivateViewMain();
         CurrentActiveView = null;
     }
 
