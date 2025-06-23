@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.cdm.figma": "https://github.com/cdmvision/unity-figma-importer.git#1.9.0",
     "com.manakhovn.figma_to_unity_importer": "https://github.com/ManakhovN/FigmaToUnityImporter.git?path=/Assets/FigmaImporter",
     "com.simonoliver.unityfigma": "https://github.com/simonoliver/UnityFigmaBridge.git",
     "com.unity.cinemachine": "3.1.3",

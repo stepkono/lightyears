@@ -22,6 +22,7 @@ public class SystemManager : MonoBehaviour
         hobby.SetRotationSpeed(rotationSpeed);
         // Insert into system considering order 
         InsertIntoList(hobby.gameObject);
+        Debug.Log("[DEBUG]: SystemManger: New hobby has been saved.");
     }
 
     private void InsertIntoList(GameObject hobbyPlanet)

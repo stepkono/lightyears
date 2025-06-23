@@ -1,4 +1,5 @@
 using System;
+using _Scripts;
 using TMPro;
 using UnityEngine;
 
@@ -12,17 +13,16 @@ public class InputFieldController : MonoBehaviour
     {
         _controller = Controller.Instance; 
         Debug.Log("INSTANCE CONTROLLER ID: " + _controller.GetInstanceID());
-        _controller.OnSaveHobby += ResetInputField;
     }
 
     private void OnEnable()
     {
-        Debug.Log("ON ENABLE RUN");
+        AppEvents.OnHobbyLaunched += ResetInputField;
     }
 
     private void OnDisable()
     {
-        _controller.OnSaveHobby -= ResetInputField;
+        AppEvents.OnHobbyLaunched -= ResetInputField;
     }
     
     public void SetHobbyName(string hobbyName)

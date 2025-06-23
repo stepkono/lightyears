@@ -1,4 +1,5 @@
 using System.Collections;
+using _Scripts;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
@@ -30,6 +31,7 @@ public class Controller : MonoBehaviour
             DontDestroyOnLoad(transform.root.gameObject);
             
             _viewsManager = ViewsManager.Instance;
+            AppEvents.OnHobbyLaunched += SaveCurrentHobby;
             Debug.Log("INSTANCE CONTROLLER ID: " + Instance.GetInstanceID());
         }
         else
@@ -40,7 +42,6 @@ public class Controller : MonoBehaviour
 
     public void CreateNewHobby()
     {
-        
         Debug.Log("[INFO]: Clicked on Create New Hobby.");
         // Planet mesh 
         hobbyCreator.GetComponent<HobbyCreator>().CreateNewHobby();
@@ -60,9 +61,10 @@ public class Controller : MonoBehaviour
     
     public void SaveCurrentHobby()
     {
-        OnSaveHobby?.Invoke();
+        // Save Hobby
         hobbyCreator.GetComponent<HobbyCreator>().SaveCurrentHobby();
         
+        // Reactivate rendering for system planets
         foreach (GameObject planet in systemManager.GetComponent<SystemManager>().HobbyPlanets)
         {
             planet.GetComponent<HobbyManager>().ActivateRendering();
