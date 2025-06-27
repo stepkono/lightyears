@@ -155,7 +155,7 @@ MonoBehaviour:
     To: CenterPlanetCam
     Blend:
       Style: 1
-      Time: 0.5
+      Time: 0.8
       CustomCurve:
         serializedVersion: 2
         m_Curve:
@@ -183,8 +183,8 @@ MonoBehaviour:
   - From: CenterPlanetCam
     To: '**ANY CAMERA**'
     Blend:
-      Style: 5
-      Time: 1
+      Style: 1
+      Time: 0.8
       CustomCurve:
         serializedVersion: 2
         m_Curve:

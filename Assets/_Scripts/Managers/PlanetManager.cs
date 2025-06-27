@@ -14,7 +14,7 @@ public class PlanetManager : MonoBehaviour
         _planetRoot = transform.Find("PlanetRoot");
         
         var planetIndex = 1; 
-        foreach (Transform child in _planetRoot)
+        foreach (Transform child in _planetRoot.Find("EvoStages"))
         {
             if (child.GetComponent<CinemachineCamera>() == null)
             {

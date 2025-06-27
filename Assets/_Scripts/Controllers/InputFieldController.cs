@@ -12,7 +12,6 @@ public class InputFieldController : MonoBehaviour
     private void Awake()
     {
         _controller = Controller.Instance; 
-        Debug.Log("INSTANCE CONTROLLER ID: " + _controller.GetInstanceID());
     }
 
     private void OnEnable()

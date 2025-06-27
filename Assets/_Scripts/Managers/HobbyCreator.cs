@@ -31,6 +31,10 @@ public class HobbyCreator : MonoBehaviour
         _currentHobbyPlanet = Instantiate(hobbyPrefab, new Vector3(0, 0, 0), Quaternion.identity);
         Debug.Log("[INFO]: Hobby planet has been instantiated.");
         
+        //TODO: THIS IS DEBUG ONLY 
+        _currentHobbyPlanet.GetComponent<HobbyManager>().InvestHours(25);
+        
+        
         // Set center view camera
         Transform centerCamera = _currentHobbyPlanet.transform.Find("PlanetContainer/CenterPlanetCam"); 
         if (centerCamera == null) 
@@ -66,6 +70,8 @@ public class HobbyCreator : MonoBehaviour
     {
         // Save user input data in HobbyData
         _currentHobbyPlanet.GetComponent<HobbyManager>().SetHobbyData(_currentHobbyData);
+        //_currentHobbyPlanet.GetComponent<HobbyManager>().SetCurrentPlanetModel(_currentHobbyPlanet);
+        
         // Pass Hobby over to SystemManager for correct order insertion 
         _systemManager.SaveNewHobby(_currentHobbyPlanet.GetComponent<HobbyManager>());
         // Switch back to MainView 

@@ -17,8 +17,8 @@ public class SystemManager : MonoBehaviour
         // Show orbit ring
         hobby.GetOrbitContainer().gameObject.SetActive(true); 
         // Set rotation speed
-        float rotationSpeed = -360f / (hobbyData.GetDaysInterval() * 24 * 60 * 60);
-        hobby.SetRotationSpeed(rotationSpeed);
+        float degSecond = -360f / (hobbyData.GetDaysInterval() * 24 * 60 * 60);
+        hobby.SetRotationSpeed(degSecond);
         // Insert into system considering order 
         InsertIntoList(hobby.gameObject);
         Debug.Log("[DEBUG]: SystemManger: New hobby has been saved.");

@@ -32,7 +32,6 @@ public class Controller : MonoBehaviour
             
             _viewsManager = ViewsManager.Instance;
             AppEvents.OnHobbyLaunched += SaveCurrentHobby;
-            Debug.Log("INSTANCE CONTROLLER ID: " + Instance.GetInstanceID());
         }
         else
         {
