@@ -95,11 +95,15 @@ public class ViewsManager : MonoBehaviour
         HobbyData hobbyData = planet.GetComponentInParent<HobbyManager>().GetHobbyData();
         var hobbyName = hobbyData.GetName();
         var hobbyNameTextField = viewPlanetDetails.transform.Find("HobbyName");
+        ButtonsManager buttonManager = viewPlanetDetails.transform.Find("ButtonAddHours").GetComponent<ButtonsManager>();
+        HobbyManager hobby = planet.GetComponentInParent<HobbyManager>();
+        buttonManager.SetSelectedHobby(hobby); 
+        
         hobbyNameTextField.GetComponent<TMP_Text>().text = hobbyName;
 
         viewPlanetDetails.SetActive(true);
         DeactivateViewMain();
-
+        
         CurrentActiveView = viewPlanetDetails;
     }
 
@@ -108,6 +112,8 @@ public class ViewsManager : MonoBehaviour
         viewPlanetDetails.SetActive(false);
         _camerasManager.SetCurrentCamera(mainSceneCamera);
 
+        viewPlanetDetails.transform.Find("ButtonAddHours").GetComponent<ButtonsManager>().RemoveSelectedHobby();
+        
         ActivateViewMain();
         CurrentActiveView = null;
     }

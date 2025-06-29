@@ -12,11 +12,11 @@ public class StagesContainer
     public StagesContainer(GameObject evoContainer, GameObject destContainer)
     {
         /*EVOLUTION*/
-        Stage evoStage1 = new Stage("first", 0, 0);
-        Stage evoStage2 = new Stage("second", 24, 1);
-        Stage evoStage3 = new Stage("third", 64, 2);
-        Stage evoStage4 = new Stage("fourth", 128, 3);
-        Stage evoStage5 = new Stage("fifth", 256, 4);
+        Stage evoStage1 = new Stage("first", 0, 0, true);
+        Stage evoStage2 = new Stage("second", 5, 1, true);
+        Stage evoStage3 = new Stage("third", 5, 2, true);
+        Stage evoStage4 = new Stage("fourth", 5, 3, true);
+        Stage evoStage5 = new Stage("fifth", 5, 4, true);
         _evoStages.Add(evoStage1);
         _evoStages.Add(evoStage2);
         _evoStages.Add(evoStage3);
@@ -27,28 +27,28 @@ public class StagesContainer
         {
             Debug.LogWarning("Evo container and/or destContainer are null.");
             return;
-        } 
-        
+        }
+
         Transform evoModels = evoContainer.transform;
-        var index = 0; 
+        var index = 0;
         foreach (Transform child in evoModels)
         {
             _evoStages[index].SetModel(child.gameObject);
             index++;
         }
-        
+
         /*DESTRUCTION*/
-        Stage destStage = new Stage("first_dest", 1);
-        Stage destStage2 = new Stage("second_dest", 2);
-        Stage destStage3 = new Stage("third_dest", 3);
-        Stage destStage4 = new Stage("fourth_dest", 4);
-        Stage destStage5 = new Stage("fifth_dest", 5);
+        Stage destStage = new Stage("first_dest", 0, false);
+        Stage destStage2 = new Stage("second_dest", 1, false);
+        Stage destStage3 = new Stage("third_dest", 2, false);
+        Stage destStage4 = new Stage("fourth_dest", 3, false);
+        Stage destStage5 = new Stage("fifth_dest", 4, false);
         _destStages.Add(destStage);
         _destStages.Add(destStage2);
         _destStages.Add(destStage3);
         _destStages.Add(destStage4);
         _destStages.Add(destStage5);
-        
+
         Transform destModels = destContainer.transform;
         var index2 = 0;
         foreach (Transform child in destModels)
@@ -56,18 +56,44 @@ public class StagesContainer
             _destStages[index2].SetModel(child.gameObject);
             index2++;
         }
-        
+
         Debug.Log("STAGES CONTAINER CREATED");
     }
 
     public Stage GetStageForInvestedHours(float investedHours, Stage currentStage)
     {
-        var stageIndex = 0;
-        while (investedHours > currentStage.HoursRequired && stageIndex < _destStages.Count)
+        int currentIndex = currentStage.StageIndex;
+        Debug.Log("CURRENT INDEX: " + currentIndex);
+        Debug.Log("CURRENT DELTA: " + investedHours);
+        while (currentIndex < _evoStages.Count - 1 && investedHours >= _evoStages[currentIndex + 1].HoursRequired)
         {
-            currentStage = _evoStages[stageIndex++];
+            Debug.Log("REQUIRED DELTA: " + _evoStages[currentIndex + 1].HoursRequired);
+            investedHours -= _evoStages[currentIndex + 1].HoursRequired;
+            currentStage = _evoStages[currentIndex + 1];
         }
-        return currentStage; 
+
+        Debug.Log("NEW STAGE: " + currentStage.StageIndex);
+        return currentStage;
+    }
+
+    public Stage GetStage(Stage currentStage, bool isGrowing)
+    {
+        if (isGrowing)
+        {
+            return null;
+        }
+        else
+        {
+            if (currentStage.StageIndex > 0 && !currentStage.Evo)
+            {
+                return _destStages[currentStage.StageIndex - 1];
+            }
+            else
+            {
+                Debug.Log("[DEBUG]: RETURNING CURRENT STAGE IN DESTRUCTION: " + currentStage.StageIndex);
+                return _destStages[currentStage.StageIndex];
+            }
+        }
     }
 
     public List<Stage> GetEvoStages()
@@ -87,33 +113,44 @@ public class HobbyManager : MonoBehaviour
     private Transform _orbitContainer;
     private Transform _planetContainer;
     private HobbyData _hobbyData;
-    
+
     [SerializeField] private GameObject evoContainer;
+
     [SerializeField] private GameObject destContainer;
+
     /*--------------TECHNICAL METADATA---------------*/
-    private GameObject _currentPlanetModel; 
+    private float _rotatedDegrees = 0f;
+    private GameObject _currentPlanetModel;
     private Vector3 _orbitRadius;
     private Vector3 _planetContainerTransform;
     private float _degPerSecond;
-    private int _rang; 
+
+    private int _rang;
+
     /*-----------------HOBBY METADATA----------------*/
     private float _executionFrequency;
     private float _investedHours;
-    private Stage _currentStage; 
+    private float _deltaHours;
+    private bool _isGrowing;
+    private bool _hasInvestedHoursInThisInterval;
+    private Stage _currentStage;
     private StagesContainer _stagesContainer;
-    
+
     private void Awake()
     {
         Debug.Log("Hobby Manager Awake");
         _orbitContainer = transform.Find("OrbitContainer");
         _planetContainer = transform.Find("PlanetContainer");
         _stagesContainer = new StagesContainer(evoContainer, destContainer);
-        
-        _orbitRadius = _orbitContainer.localScale; 
+
+        _orbitRadius = _orbitContainer.localScale;
         _investedHours = 0;
+        _deltaHours = 0;
+        _isGrowing = true;
+        _hasInvestedHoursInThisInterval = false;
         _currentStage = _stagesContainer.GetEvoStages().First();
     }
-    
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -131,43 +168,88 @@ public class HobbyManager : MonoBehaviour
         {
             Debug.LogWarning("No stage upgrade found.");
         }
-        
-        if (_investedHours >= _stagesContainer.GetEvoStages()[_currentStage.StageIndex].HoursRequired &&
-            _currentStage.StageIndex < _stagesContainer.GetEvoStages().Count - 1
-           )
+
+
+        if (_isGrowing)
         {
-            UpgradeStage();
+            // Check hours if eligible for growth
+            if (_currentStage.StageIndex < _stagesContainer.GetEvoStages().Count - 1 &&
+                _deltaHours >= _stagesContainer.GetEvoStages()[_currentStage.StageIndex + 1].HoursRequired
+               )
+            {
+                UpgradeStage();
+            }
+        }
+        else
+        {
+            if (_deltaHours >= 2)
+            {
+                _isGrowing = true;
+                _deltaHours = 0;
+                Debug.Log("[DEBUG]: Planet recovering.");
+                destContainer.transform.GetChild(_currentStage.StageIndex).gameObject.SetActive(false);
+                evoContainer.transform.GetChild(_currentStage.StageIndex).gameObject.SetActive(true);
+            }
         }
     }
 
     private void UpgradeStage()
     {
         evoContainer.transform.GetChild(_currentStage.StageIndex).gameObject.SetActive(false);
-        
-        _currentStage = _stagesContainer.GetStageForInvestedHours(_investedHours, _currentStage);
-        Debug.Log("STAGE INDEX: " + _currentStage.StageIndex);
-        String test = evoContainer.transform.GetChild(_currentStage.StageIndex).gameObject.name;
-        Debug.Log("NAME OF THE OBJECT: " + test);
-        //_currentPlanetModel = Instantiate(evoContainer.transform.GetChild(_currentStage.StageIndex).gameObject, new Vector3(0, 0, 0), Quaternion.identity);
+        destContainer.transform.GetChild(_currentStage.StageIndex).gameObject.SetActive(false);
+
+        _currentStage = _stagesContainer.GetStageForInvestedHours(_deltaHours, _currentStage);
 
         evoContainer.transform.GetChild(_currentStage.StageIndex).gameObject.SetActive(true);
+        _deltaHours = 0;
+        Debug.Log("[DEBUG]: DELTA HOURS SET TO 0.");
     }
 
     private void DowngradeStage()
     {
-        
+        if (_isGrowing)
+        {
+            _isGrowing = false;
+            evoContainer.transform.GetChild(_currentStage.StageIndex).gameObject.SetActive(false);
+            Debug.Log("[DEBUG]: Planet entered destruction phase.");
+        }
+        else
+        {
+            destContainer.transform.GetChild(_currentStage.StageIndex).gameObject.SetActive(false);
+            Debug.Log("[DEBUG]: Deep in destruction phase.");
+        }
+
+        _currentStage = _stagesContainer.GetStage(_currentStage, _isGrowing);
+        Debug.Log("STAGE INDEX: " + _currentStage.StageIndex + " " + _currentStage.Name);
+        destContainer.transform.GetChild(_currentStage.StageIndex).gameObject.SetActive(true);
     }
-    
+
     void Update()
     {
-        transform.Rotate(0, _degPerSecond * Time.deltaTime * Utils.TIMESCALER, 0);
+        float deltaRotation = _degPerSecond * Time.deltaTime * Utils.TIMESCALER;
+        _rotatedDegrees += Math.Abs(deltaRotation);
+
+        transform.Rotate(0, deltaRotation, 0);
+
+        if (_rotatedDegrees >= 360f)
+        {
+            Debug.Log("[DEBUG]: Planet rotated.");
+            _rotatedDegrees = 0; // reset internal interval counter 
+            if (!_hasInvestedHoursInThisInterval)
+            {
+                Debug.Log("[DEBUG]: Lazy bitch.");
+                DowngradeStage();
+            }
+
+            _hasInvestedHoursInThisInterval = false;
+        }
     }
 
     public void SetHobbyData(HobbyData hobbyData)
     {
         _hobbyData = hobbyData;
     }
-    
+
     public void SetRotationSpeed(float degSecond)
     {
         _degPerSecond = degSecond;
@@ -175,7 +257,11 @@ public class HobbyManager : MonoBehaviour
 
     public void InvestHours(float newHours)
     {
+        Debug.Log("[DEBUG]: Investing hours.");
         _investedHours += newHours;
+        _deltaHours += newHours;
+        _hasInvestedHoursInThisInterval = true;
+        Debug.Log("[DEBUG]: DELTA HOURS SET TO " + _investedHours + ".");
         CheckForStageUpgrade();
     }
 
@@ -183,7 +269,7 @@ public class HobbyManager : MonoBehaviour
     {
         _currentPlanetModel = planetModel;
     }
-    
+
     public void ActivateRendering()
     {
         foreach (Transform planet in _planetContainer.Find("PlanetRoot").Find("EvoStages"))
@@ -191,6 +277,7 @@ public class HobbyManager : MonoBehaviour
             planet.gameObject.GetComponent<MeshRenderer>().enabled = true;
         }
     }
+
     public void DeactivateRendering()
     {
         foreach (Transform planet in _planetContainer.Find("PlanetRoot").Find("EvoStages"))
@@ -217,7 +304,7 @@ public class HobbyManager : MonoBehaviour
     public void UpdateRang(int rang)
     {
         _rang = rang;
-        
+
         // Update the scale of the orbit
         _orbitContainer.localScale = new Vector3(4f, 4f, 4f) + new Vector3(2f, 2f, 2f) * _rang;
         // Update the distance of planet from orbit center 

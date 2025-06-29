@@ -1,6 +1,7 @@
 using System;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Color = UnityEngine.Color;
 
 enum Direction
@@ -106,6 +107,7 @@ public class SwipeDetection : MonoBehaviour
 
         if (_mainCamera != null)
         {
+            
             Ray ray = _mainCamera.ScreenPointToRay(_startPosition);
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
@@ -122,9 +124,9 @@ public class SwipeDetection : MonoBehaviour
                 
                 if (_viewsManager.CurrentActiveView != null)
                 {
-                    _viewsManager.DeactivateCurrentView(); 
+                    //_viewsManager.DeactivateCurrentView(); 
                 }
-                _camerasManager.SetCurrentCamera(_mainSceneCamera);
+                //_camerasManager.SetCurrentCamera(_mainSceneCamera);
             }
         }
         else

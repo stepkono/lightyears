@@ -32,7 +32,7 @@ public class HobbyCreator : MonoBehaviour
         Debug.Log("[INFO]: Hobby planet has been instantiated.");
         
         //TODO: THIS IS DEBUG ONLY 
-        _currentHobbyPlanet.GetComponent<HobbyManager>().InvestHours(25);
+        //_currentHobbyPlanet.GetComponent<HobbyManager>().InvestHours(25);
         
         
         // Set center view camera

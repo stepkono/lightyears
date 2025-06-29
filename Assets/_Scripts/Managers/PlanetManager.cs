@@ -16,11 +16,12 @@ public class PlanetManager : MonoBehaviour
         var planetIndex = 1; 
         foreach (Transform child in _planetRoot.Find("EvoStages"))
         {
-            if (child.GetComponent<CinemachineCamera>() == null)
-            {
-                child.gameObject.SetActive(_visibleIndex == planetIndex);
-            }
+            child.gameObject.SetActive(_visibleIndex == planetIndex);
             planetIndex++;
+        }
+        foreach (Transform child in _planetRoot.Find("DestStages"))
+        {
+            child.gameObject.SetActive(false);
         }
     }
 
