@@ -1,5 +1,7 @@
+using System;
 using Unity.Cinemachine;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class HobbyCreator : MonoBehaviour
 {
@@ -22,18 +24,23 @@ public class HobbyCreator : MonoBehaviour
     {
         // Init hobby 
         _currentHobbyData = new HobbyData();
-        var hobbyPrefab = Resources.Load<GameObject>("HobbyContainer");
-        if (hobbyPrefab == null)
+        
+        // Set creation date 
+        _currentHobbyData.SetCreationDate(DateTime.Now);
+
+        GameObject[] planetPrefabs = Resources.LoadAll<GameObject>("Models/Containers");
+        if (planetPrefabs == null || planetPrefabs.Length == 0)
         {
-            Debug.LogError("[ERROR]: No Hobby Prefab found.");
+            Debug.LogError("[ERROR]: No models prefabs found.");
             return; 
         }
-        _currentHobbyPlanet = Instantiate(hobbyPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        
+        GameObject hobbyPlanet = planetPrefabs[Random.Range(0, planetPrefabs.Length)];
+        _currentHobbyPlanet = Instantiate(hobbyPlanet, new Vector3(0, 0, 0), Quaternion.identity);
         Debug.Log("[INFO]: Hobby planet has been instantiated.");
         
         //TODO: THIS IS DEBUG ONLY 
         //_currentHobbyPlanet.GetComponent<HobbyManager>().InvestHours(25);
-        
         
         // Set center view camera
         Transform centerCamera = _currentHobbyPlanet.transform.Find("PlanetContainer/CenterPlanetCam"); 

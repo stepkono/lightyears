@@ -39,7 +39,7 @@ public class PlanetManager : MonoBehaviour
     public void OnTouch()
     {
         Debug.Log("Planet touched. " + name);
-        var planetCam = GameObject.Find("PlanetCam");
+        var planetCam = GameObject.Find("DetailsViewPlanetCam");
         if (planetCam != null)
         {
             //CinemachineCamera cam = planetCam.GetComponent<CinemachineCamera>();;

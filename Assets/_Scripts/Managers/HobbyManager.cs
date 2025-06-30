@@ -133,6 +133,7 @@ public class HobbyManager : MonoBehaviour
     private float _deltaHours;
     private bool _isGrowing;
     private bool _hasInvestedHoursInThisInterval;
+    private int _intervalStreak; 
     private Stage _currentStage;
     private StagesContainer _stagesContainer;
 
@@ -146,6 +147,7 @@ public class HobbyManager : MonoBehaviour
         _orbitRadius = _orbitContainer.localScale;
         _investedHours = 0;
         _deltaHours = 0;
+        _intervalStreak = 0;
         _isGrowing = true;
         _hasInvestedHoursInThisInterval = false;
         _currentStage = _stagesContainer.GetEvoStages().First();
@@ -168,8 +170,7 @@ public class HobbyManager : MonoBehaviour
         {
             Debug.LogWarning("No stage upgrade found.");
         }
-
-
+        
         if (_isGrowing)
         {
             // Check hours if eligible for growth
@@ -238,7 +239,12 @@ public class HobbyManager : MonoBehaviour
             if (!_hasInvestedHoursInThisInterval)
             {
                 Debug.Log("[DEBUG]: Lazy bitch.");
+                _intervalStreak = 0; 
                 DowngradeStage();
+            }
+            else
+            {
+                _intervalStreak += 1; 
             }
 
             _hasInvestedHoursInThisInterval = false;
@@ -263,6 +269,34 @@ public class HobbyManager : MonoBehaviour
         _hasInvestedHoursInThisInterval = true;
         Debug.Log("[DEBUG]: DELTA HOURS SET TO " + _investedHours + ".");
         CheckForStageUpgrade();
+    }
+
+    public String GetTotalInvestedHoursAsString()
+    {
+        String hoursString = ((int)_investedHours).ToString();
+        String minutesString; 
+        int minutes = (int)((_investedHours - (int)_investedHours) * 60);
+        if (minutes != 0)
+        {
+            minutesString = minutes.ToString(); 
+        }
+        else
+        {
+            minutesString = "";
+        }
+        
+        String totalInvestedHoursString = hoursString + ":" + minutesString;
+        return totalInvestedHoursString;
+    }
+
+    public String GetCurrentStageName()
+    {
+        return _currentStage.Name;
+    }
+
+    public int GetIntervalStreak()
+    {
+        return _intervalStreak;
     }
 
     public void SetCurrentPlanetModel(GameObject planetModel)

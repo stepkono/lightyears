@@ -92,15 +92,40 @@ public class ViewsManager : MonoBehaviour
     {
         planet.OnTouch();
 
-        HobbyData hobbyData = planet.GetComponentInParent<HobbyManager>().GetHobbyData();
-        var hobbyName = hobbyData.GetName();
-        var hobbyNameTextField = viewPlanetDetails.transform.Find("HobbyName");
-        ButtonsManager buttonManager = viewPlanetDetails.transform.Find("ButtonAddHours").GetComponent<ButtonsManager>();
-        HobbyManager hobby = planet.GetComponentInParent<HobbyManager>();
-        buttonManager.SetSelectedHobby(hobby); 
+        var viewRoot = viewPlanetDetails.transform;
         
+        HobbyManager hobby = planet.GetComponentInParent<HobbyManager>();
+        HobbyData hobbyData = hobby.GetHobbyData();
+        
+        // Hobby name
+        var hobbyName = hobbyData.GetName();
+        Transform hobbyNameTextField = viewRoot.Find("HobbyName");
+        hobbyNameTextField.gameObject.SetActive(true);
         hobbyNameTextField.GetComponent<TMP_Text>().text = hobbyName;
 
+        // Total invested hours 
+        var totalHoursInvested = hobby.GetTotalInvestedHoursAsString();
+        var hoursCountTextField = viewRoot.Find("HoursInvested").Find("HoursCount");
+        hoursCountTextField.GetComponent<TMP_Text>().text = totalHoursInvested; 
+        
+        // Name of the current development stage of the planet
+        var stageName = hobby.GetCurrentStageName();
+        var stageNameTextField = viewRoot.Find("HobbyStats").Find("LifeStageName");
+        stageNameTextField.GetComponent<TMP_Text>().text = stageName;
+        
+        // Streak count 
+        var streakCount = hobby.GetIntervalStreak().ToString();
+        var streakCountTextField = viewRoot.Find("HobbyStats").Find("StreakCount");
+        streakCountTextField.GetComponent<TMP_Text>().text = streakCount;
+        
+        // Creation date 
+        var creationDate = hobbyData.GetCreationDate().ToString("dd.MM.yyyy");
+        var creationDateTextField = viewRoot.Find("HobbyStats").Find("CreationDate");
+        creationDateTextField.GetComponent<TMP_Text>().text = creationDate;
+
+        ButtonsManager buttonManager = viewPlanetDetails.transform.Find("ButtonAddHours").GetComponent<ButtonsManager>();
+        buttonManager.SetSelectedHobby(hobby); 
+        
         viewPlanetDetails.SetActive(true);
         DeactivateViewMain();
         
@@ -138,6 +163,11 @@ public class ViewsManager : MonoBehaviour
     private void DeactivateViewMain()
     {
         viewMain.SetActive(false);
+    }
+
+    IEnumerator ActivateHobbyStatsAfterDelay(float delay, float from, float to)
+    {
+        yield return new WaitForSeconds(delay);
     }
 
     IEnumerator ActivateBackgroundAfterDelay(float delay, float from, float to)

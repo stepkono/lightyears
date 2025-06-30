@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 119c1bd3601648f28a252a6030e067b6, type: 3}
   m_Name: UnityFigmaBridgeSettings
   m_EditorClassIdentifier: 
-  DocumentUrl: https://www.figma.com/design/6fVZPfH7LSY6KQo7fEHrNB/Untitled?node-id=1-2&t=AFN2havBtwVdMy0P-1
+  DocumentUrl: https://www.figma.com/design/6fVZPfH7LSY6KQo7fEHrNB/Untitled?node-id=20-62&t=d8V4SyjK90Hww2BQ-1
   BuildPrototypeFlow: 1
   RunTimeAssetsScenePath: Assets/Scenes/FigmaImportScene.unity
   EnableAutoLayout: 0

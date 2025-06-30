@@ -632,9 +632,13 @@ MonoBehaviour:
   m_CurrentScreenInstance: {fileID: 0}
   m_PrototypeFlowInitialScreenId: 
   m_Screens:
-  - FigmaNodeId: 1:2
-    FigmaScreenPrefab: {fileID: 1312276928700458736, guid: a2ceabeb7b08c48958fd5994bdde294e, type: 3}
-    FigmaScreenName: iPhone 16 Pro - 86
+  - FigmaNodeId: 7:2
+    FigmaScreenPrefab: {fileID: 7294716154342283740, guid: b62019b0e2a8a4e14b2112a5f5a9e53f, type: 3}
+    FigmaScreenName: iPhone 16 Pro - 102
+    ParentSectionNodeId: 
+  - FigmaNodeId: 20:62
+    FigmaScreenPrefab: {fileID: 8659642475324717163, guid: a788d2f1b463d4766b755d95a2d9c682, type: 3}
+    FigmaScreenName: iPhone 16 Pro - 93
     ParentSectionNodeId: 
   m_Sections: []
 --- !u!114 &2035519964

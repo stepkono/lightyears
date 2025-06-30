@@ -1,7 +1,10 @@
 
+using System;
+
 public class HobbyData
 {
     private string _name;
+    private DateTime _creationDate; 
     public bool IntervalSet { get; private set; } = false; 
     private bool _reminder = false;  
     private int _daysInterval;
@@ -14,6 +17,11 @@ public class HobbyData
     public void SetDaysInterval(int daysFrequency)
     {
         _daysInterval = daysFrequency;
+    }
+
+    public void SetCreationDate(DateTime creationDate)
+    {
+        _creationDate = creationDate;
     }
     public void ActivateInterval()
     {
@@ -39,5 +47,10 @@ public class HobbyData
     public int GetDaysInterval()
     {
         return _daysInterval;
+    }
+
+    public DateTime GetCreationDate()
+    {
+        return _creationDate;
     }
 }
