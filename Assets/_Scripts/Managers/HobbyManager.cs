@@ -278,14 +278,14 @@ public class HobbyManager : MonoBehaviour
         int minutes = (int)((_investedHours - (int)_investedHours) * 60);
         if (minutes != 0)
         {
-            minutesString = minutes.ToString(); 
+            minutesString = ":" + minutes;
         }
         else
         {
             minutesString = "";
         }
         
-        String totalInvestedHoursString = hoursString + ":" + minutesString;
+        String totalInvestedHoursString = hoursString + minutesString;
         return totalInvestedHoursString;
     }
 

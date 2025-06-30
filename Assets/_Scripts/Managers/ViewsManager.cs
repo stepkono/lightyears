@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using _Scripts;
 using TMPro;
@@ -20,7 +21,7 @@ public class ViewsManager : MonoBehaviour
     [SerializeField] private GameObject gradientPlanet;
     [SerializeField] private GameObject gradientButton1;
     [SerializeField] private GameObject gradientButton2;
-    
+
     // View -> Hobby Creation
     [SerializeField] private GameObject viewHobbyCreation;
     [SerializeField] private GameObject hobbyCreationView;
@@ -42,7 +43,7 @@ public class ViewsManager : MonoBehaviour
     #endregion
 
     private LaunchSlider _launchSlider;
-    
+
     private void Awake()
     {
         if (Instance == null)
@@ -64,7 +65,7 @@ public class ViewsManager : MonoBehaviour
         DeactivateViewMain();
 
         // Deactivate this view, if planet launched
-        AppEvents.OnHobbyLaunched += DeactivateHobbyCreationView; 
+        AppEvents.OnHobbyLaunched += DeactivateHobbyCreationView;
 
         CurrentActiveView = viewHobbyCreation;
         OnHobbyCreationViewActivation?.Invoke(true);
@@ -72,11 +73,12 @@ public class ViewsManager : MonoBehaviour
         // Slow fade-in anim for hobby creation background
         StartCoroutine(ActivateBackgroundAfterDelay(0.5f, 0, 1));
     }
+
     public void DeactivateHobbyCreationView()
     {
         // Unsub from launch event 
         AppEvents.OnHobbyLaunched -= DeactivateHobbyCreationView;
-        
+
         OnHobbyCreationViewActivation?.Invoke(false);
 
         backgroundGradient.SetActive(false);
@@ -84,7 +86,7 @@ public class ViewsManager : MonoBehaviour
         ActivateViewMain();
 
         CurrentActiveView = null;
-        
+
         Debug.Log("[DEBUG]: ViewsManager: Hobby creation view deactivated.");
     }
 
@@ -92,43 +94,11 @@ public class ViewsManager : MonoBehaviour
     {
         planet.OnTouch();
 
-        var viewRoot = viewPlanetDetails.transform;
-        
-        HobbyManager hobby = planet.GetComponentInParent<HobbyManager>();
-        HobbyData hobbyData = hobby.GetHobbyData();
-        
-        // Hobby name
-        var hobbyName = hobbyData.GetName();
-        Transform hobbyNameTextField = viewRoot.Find("HobbyName");
-        hobbyNameTextField.gameObject.SetActive(true);
-        hobbyNameTextField.GetComponent<TMP_Text>().text = hobbyName;
-
-        // Total invested hours 
-        var totalHoursInvested = hobby.GetTotalInvestedHoursAsString();
-        var hoursCountTextField = viewRoot.Find("HoursInvested").Find("HoursCount");
-        hoursCountTextField.GetComponent<TMP_Text>().text = totalHoursInvested; 
-        
-        // Name of the current development stage of the planet
-        var stageName = hobby.GetCurrentStageName();
-        var stageNameTextField = viewRoot.Find("HobbyStats").Find("LifeStageName");
-        stageNameTextField.GetComponent<TMP_Text>().text = stageName;
-        
-        // Streak count 
-        var streakCount = hobby.GetIntervalStreak().ToString();
-        var streakCountTextField = viewRoot.Find("HobbyStats").Find("StreakCount");
-        streakCountTextField.GetComponent<TMP_Text>().text = streakCount;
-        
-        // Creation date 
-        var creationDate = hobbyData.GetCreationDate().ToString("dd.MM.yyyy");
-        var creationDateTextField = viewRoot.Find("HobbyStats").Find("CreationDate");
-        creationDateTextField.GetComponent<TMP_Text>().text = creationDate;
-
-        ButtonsManager buttonManager = viewPlanetDetails.transform.Find("ButtonAddHours").GetComponent<ButtonsManager>();
-        buttonManager.SetSelectedHobby(hobby); 
-        
         viewPlanetDetails.SetActive(true);
         DeactivateViewMain();
-        
+
+        StartCoroutine(ActivateHobbyStatsAfterDelay(0.5f, planet));
+
         CurrentActiveView = viewPlanetDetails;
     }
 
@@ -138,6 +108,8 @@ public class ViewsManager : MonoBehaviour
         _camerasManager.SetCurrentCamera(mainSceneCamera);
 
         viewPlanetDetails.transform.Find("ButtonAddHours").GetComponent<ButtonsManager>().RemoveSelectedHobby();
+
+        ResetPlanetDetailUI();
         
         ActivateViewMain();
         CurrentActiveView = null;
@@ -160,24 +132,189 @@ public class ViewsManager : MonoBehaviour
     {
         viewMain.SetActive(true);
     }
+
     private void DeactivateViewMain()
     {
         viewMain.SetActive(false);
     }
 
-    IEnumerator ActivateHobbyStatsAfterDelay(float delay, float from, float to)
+    private void ResetPlanetDetailUI()
     {
+        var viewRoot = viewPlanetDetails.transform;
+        
+        Transform hobbyNameTextField = viewRoot.Find("HobbyName");
+        var hoursCountTextField = viewRoot.Find("HoursInvested").Find("HoursCount");
+        var stageNameTextField = viewRoot.Find("HobbyStats").Find("LifeStageName");
+        var streakCountTextField = viewRoot.Find("HobbyStats").Find("StreakCount");
+        var creationDateTextField = viewRoot.Find("HobbyStats").Find("CreationDate");
+
+        var statsBackground = viewRoot.Find("HobbyStats").Find("Background");
+        var staticTextCreationDate = viewRoot.Find("HobbyStats").Find("Entstehungsdatum");
+        var staticTextStageName = viewRoot.Find("HobbyStats").Find("Entwicklungsstufe");
+        var staticTextStreak = viewRoot.Find("HobbyStats").Find("Streak");
+        var staticTextStunden = viewRoot.Find("HoursInvested").Find("Stunden");
+        var staticButtonAddHours = viewRoot.Find("ButtonAddHours");
+
+        var hobbyNameColor = hobbyNameTextField.GetComponent<TMP_Text>().color;
+        hobbyNameColor.a = 0;
+        hobbyNameTextField.GetComponent<TMP_Text>().color = hobbyNameColor;
+
+        var hoursInvestedColor = hoursCountTextField.GetComponent<TMP_Text>().color;
+        hoursInvestedColor.a = 0;
+        hoursCountTextField.GetComponent<TMP_Text>().color = hoursInvestedColor;
+
+        var stageNameColor = stageNameTextField.GetComponent<TMP_Text>().color;
+        stageNameColor.a = 0;
+        stageNameTextField.GetComponent<TMP_Text>().color = stageNameColor;
+
+        var streakCountColor = streakCountTextField.GetComponent<TMP_Text>().color;
+        streakCountColor.a = 0;
+        streakCountTextField.GetComponent<TMP_Text>().color = streakCountColor;
+
+        var creationDateColor = creationDateTextField.GetComponent<TMP_Text>().color;
+        creationDateColor.a = 0;
+        creationDateTextField.GetComponent<TMP_Text>().color = creationDateColor;
+        
+        var backgroundColor = statsBackground.GetComponent<Image>().color;
+        backgroundColor.a = 0;
+        statsBackground.GetComponent<Image>().color = backgroundColor;
+
+        var staticTextCreationDateColor = staticTextCreationDate.GetComponent<TMP_Text>().color;
+        staticTextCreationDateColor.a = 0;
+        staticTextCreationDate.GetComponent<TMP_Text>().color = staticTextCreationDateColor;
+
+        var staticTextStageNameColor = staticTextStageName.GetComponent<TMP_Text>().color;
+        staticTextStageNameColor.a = 0;
+        staticTextStageName.GetComponent<TMP_Text>().color = staticTextStageNameColor;
+
+        var staticTextStreakColor = staticTextStreak.GetComponent<TMP_Text>().color;
+        staticTextStreakColor.a = 0;
+        staticTextStreak.GetComponent<TMP_Text>().color = staticTextStreakColor;
+
+        var staticTextStundenColor = staticTextStunden.GetComponent<TMP_Text>().color;
+        staticTextStundenColor.a = 0;
+        staticTextStunden.GetComponent<TMP_Text>().color = staticTextStundenColor;
+
+        var staticButtonAddHoursColor = staticButtonAddHours.GetComponent<Image>().color;
+        staticButtonAddHoursColor.a = 0;
+        staticButtonAddHours.GetComponent<Image>().color = staticButtonAddHoursColor;
+    }
+
+    IEnumerator ActivateHobbyStatsAfterDelay(float delay, PlanetManager planet)
+    {
+        var viewRoot = viewPlanetDetails.transform;
+
+        HobbyManager hobby = planet.GetComponentInParent<HobbyManager>();
+        HobbyData hobbyData = hobby.GetHobbyData();
+
+        // Hobby name
+        var hobbyName = hobbyData.GetName();
+        Transform hobbyNameTextField = viewRoot.Find("HobbyName");
+        hobbyNameTextField.GetComponent<TMP_Text>().text = hobbyName;
+
+        // Total invested hours 
+        var totalHoursInvested = hobby.GetTotalInvestedHoursAsString();
+        var hoursCountTextField = viewRoot.Find("HoursInvested").Find("HoursCount");
+        hoursCountTextField.GetComponent<TMP_Text>().text = totalHoursInvested;
+
+        // Name of the current development stage of the planet
+        var stageName = hobby.GetCurrentStageName();
+        var stageNameTextField = viewRoot.Find("HobbyStats").Find("LifeStageName");
+        stageNameTextField.GetComponent<TMP_Text>().text = stageName;
+
+        // Streak count 
+        var streakCount = hobby.GetIntervalStreak().ToString();
+        var streakCountTextField = viewRoot.Find("HobbyStats").Find("StreakCount");
+        streakCountTextField.GetComponent<TMP_Text>().text = streakCount;
+
+        // Creation date 
+        var creationDate = hobbyData.GetCreationDate().ToString("dd.MM.yyyy");
+        var creationDateTextField = viewRoot.Find("HobbyStats").Find("CreationDate");
+        creationDateTextField.GetComponent<TMP_Text>().text = creationDate;
+
+        // Static Stats-elems
+        var statsBackground = viewRoot.Find("HobbyStats").Find("Background");
+        var staticTextCreationDate = viewRoot.Find("HobbyStats").Find("Entstehungsdatum");
+        var staticTextStageName = viewRoot.Find("HobbyStats").Find("Entwicklungsstufe");
+        var staticTextStreak = viewRoot.Find("HobbyStats").Find("Streak");
+        var staticTextStunden = viewRoot.Find("HoursInvested").Find("Stunden");
+        var staticButtonAddHours = viewRoot.Find("ButtonAddHours");
+
+        ButtonsManager buttonManager =
+            viewPlanetDetails.transform.Find("ButtonAddHours").GetComponent<ButtonsManager>();
+        buttonManager.SetSelectedHobby(hobby);
+
         yield return new WaitForSeconds(delay);
+
+        float duration = 1;
+        float elapsedTime = 0;
+        float from = 0;
+        float to = 1;
+
+        while (elapsedTime <= duration)
+        {
+            float interpolator = elapsedTime / duration;
+
+            // Dynamic elements 
+            var hobbyNameColor = hobbyNameTextField.GetComponent<TMP_Text>().color;
+            hobbyNameColor.a = Mathf.Lerp(from, to, interpolator);
+            hobbyNameTextField.GetComponent<TMP_Text>().color = hobbyNameColor;
+
+            var hoursInvestedColor = hoursCountTextField.GetComponent<TMP_Text>().color;
+            hoursInvestedColor.a = Mathf.Lerp(from, to, interpolator);
+            hoursCountTextField.GetComponent<TMP_Text>().color = hoursInvestedColor;
+
+            var stageNameColor = stageNameTextField.GetComponent<TMP_Text>().color;
+            stageNameColor.a = Mathf.Lerp(from, to, interpolator);
+            stageNameTextField.GetComponent<TMP_Text>().color = stageNameColor;
+
+            var streakCountColor = streakCountTextField.GetComponent<TMP_Text>().color;
+            streakCountColor.a = Mathf.Lerp(from, to, interpolator);
+            streakCountTextField.GetComponent<TMP_Text>().color = streakCountColor;
+
+            var creationDateColor = creationDateTextField.GetComponent<TMP_Text>().color;
+            creationDateColor.a = Mathf.Lerp(from, to, interpolator);
+            creationDateTextField.GetComponent<TMP_Text>().color = creationDateColor;
+
+            // Static elements
+            var backgroundColor = statsBackground.GetComponent<Image>().color;
+            backgroundColor.a = Mathf.Lerp(from, to, interpolator);
+            statsBackground.GetComponent<Image>().color = backgroundColor;
+
+            var staticTextCreationDateColor = staticTextCreationDate.GetComponent<TMP_Text>().color;
+            staticTextCreationDateColor.a = Mathf.Lerp(from, to, interpolator);
+            staticTextCreationDate.GetComponent<TMP_Text>().color = staticTextCreationDateColor;
+
+            var staticTextStageNameColor = staticTextStageName.GetComponent<TMP_Text>().color;
+            staticTextStageNameColor.a = Mathf.Lerp(from, to, interpolator);
+            staticTextStageName.GetComponent<TMP_Text>().color = staticTextStageNameColor;
+
+            var staticTextStreakColor = staticTextStreak.GetComponent<TMP_Text>().color;
+            staticTextStreakColor.a = Mathf.Lerp(from, to, interpolator);
+            staticTextStreak.GetComponent<TMP_Text>().color = staticTextStreakColor;
+
+            var staticTextStundenColor = staticTextStunden.GetComponent<TMP_Text>().color;
+            staticTextStundenColor.a = Mathf.Lerp(from, to, interpolator);
+            staticTextStunden.GetComponent<TMP_Text>().color = staticTextStundenColor;
+
+            var staticButtonAddHoursColor = staticButtonAddHours.GetComponent<Image>().color;
+            staticButtonAddHoursColor.a = Mathf.Lerp(from, to, interpolator);
+            staticButtonAddHours.GetComponent<Image>().color = staticButtonAddHoursColor;
+
+            elapsedTime += Time.deltaTime;
+
+            yield return null;
+        }
     }
 
     IEnumerator ActivateBackgroundAfterDelay(float delay, float from, float to)
     {
         yield return new WaitForSeconds(delay);
-        
+
         gradientPlanet.SetActive(true);
         viewHobbyCreation.SetActive(true);
 
-        float elapsedTimeIntervalButton = 0; 
+        float elapsedTimeIntervalButton = 0;
         float elapsedTimeShareButton = -0.5f;
         float elapsedTimeReminderButton = -1f;
         float elapsedTimeGradient = -1.5f;
@@ -188,11 +325,12 @@ public class ViewsManager : MonoBehaviour
         GameObject intervalButtonContainer = viewHobbyCreation.transform.Find("IntervalSelectionContainer").gameObject;
         GameObject shareButtonContainer = viewHobbyCreation.transform.Find("ShareButtonContainer").gameObject;
         GameObject reminderButtonContainer = viewHobbyCreation.transform.Find("ReminderButtonContainer").gameObject;
-        
+
         while (elapsedTimeGradient < duration)
         {
             // Interval Button
-            float interpolatorIntervalButton = elapsedTimeIntervalButton / duration; // Current ratio between from and to 
+            float interpolatorIntervalButton =
+                elapsedTimeIntervalButton / duration; // Current ratio between from and to 
             foreach (Transform child in intervalButtonContainer.transform)
             {
                 if (child.TryGetComponent<Image>(out var intervalButtonImage))
@@ -209,7 +347,7 @@ public class ViewsManager : MonoBehaviour
                     text.color = textColor;
                 }
             }
-            
+
             // Share Button
             float interpolatorShareButton = elapsedTimeShareButton / duration; // Current ratio between from and to 
             foreach (Transform child in shareButtonContainer.transform)
@@ -221,9 +359,10 @@ public class ViewsManager : MonoBehaviour
                     shareButtonImage.color = shareButtonColor; // Set updated alpha
                 }
             }
-            
+
             //  Reminder Button 
-            float interpolatorReminderButton = elapsedTimeReminderButton / duration; // Current ratio between from and to 
+            float interpolatorReminderButton =
+                elapsedTimeReminderButton / duration; // Current ratio between from and to 
             foreach (Transform child in reminderButtonContainer.transform)
             {
                 if (child.TryGetComponent<Image>(out var reminderButtonImage))
@@ -233,18 +372,18 @@ public class ViewsManager : MonoBehaviour
                     reminderButtonImage.color = reminderButtonColor; // Set updated alpha
                 }
             }
-            
+
             // Gradient 
             float interpolatorGradient = elapsedTimeGradient / duration; // Current ratio between from and to 
             Color imageColor = spriteRenderer.color; // Get current color 
             imageColor.a = Mathf.Lerp(from, to, interpolatorGradient); // Update gradient alpha 
             spriteRenderer.color = imageColor; // Set updated alpha
-            
+
             elapsedTimeIntervalButton += Time.deltaTime;
             elapsedTimeShareButton += Time.deltaTime;
             elapsedTimeReminderButton += Time.deltaTime;
             elapsedTimeGradient += Time.deltaTime;
-            
+
             yield return null;
         }
     }
