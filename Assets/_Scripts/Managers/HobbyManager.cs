@@ -13,10 +13,10 @@ public class StagesContainer
     {
         /*EVOLUTION*/
         Stage evoStage1 = new Stage("first", 0, 0, true);
-        Stage evoStage2 = new Stage("second", 5, 1, true);
-        Stage evoStage3 = new Stage("third", 5, 2, true);
-        Stage evoStage4 = new Stage("fourth", 5, 3, true);
-        Stage evoStage5 = new Stage("fifth", 5, 4, true);
+        Stage evoStage2 = new Stage("second", 5 * 3600, 1, true);
+        Stage evoStage3 = new Stage("third", 5 * 3600, 2, true);
+        Stage evoStage4 = new Stage("fourth", 5 * 3600, 3, true);
+        Stage evoStage5 = new Stage("fifth", 5 * 3600, 4, true);
         _evoStages.Add(evoStage1);
         _evoStages.Add(evoStage2);
         _evoStages.Add(evoStage3);
@@ -107,6 +107,19 @@ public class StagesContainer
     }
 }
 
+public struct InvestedTimeString
+{
+    public string Hours;
+    public string Minutes;
+
+    public InvestedTimeString(string hours, string minutes)
+    {
+        Hours = hours;
+        Minutes = minutes;
+    }
+}
+
+
 public class HobbyManager : MonoBehaviour
 {
     /*--------------------CHILDREN-------------------*/
@@ -183,7 +196,7 @@ public class HobbyManager : MonoBehaviour
         }
         else
         {
-            if (_deltaHours >= 2)
+            if (_deltaHours >= 2 * 3600)
             {
                 _isGrowing = true;
                 _deltaHours = 0;
@@ -264,6 +277,11 @@ public class HobbyManager : MonoBehaviour
     public void InvestHours(float newHours)
     {
         Debug.Log("[DEBUG]: Investing hours.");
+        
+        int hours = (int)(newHours / 3600);
+        int minutes = (int)(newHours / 60) % 60;
+        int seconds = (int)(newHours % 60);
+        
         _investedHours += newHours;
         _deltaHours += newHours;
         _hasInvestedHoursInThisInterval = true;
@@ -271,22 +289,13 @@ public class HobbyManager : MonoBehaviour
         CheckForStageUpgrade();
     }
 
-    public String GetTotalInvestedHoursAsString()
+    public InvestedTimeString GetTotalInvestedHoursAsString()
     {
-        String hoursString = ((int)_investedHours).ToString();
-        String minutesString; 
-        int minutes = (int)((_investedHours - (int)_investedHours) * 60);
-        if (minutes != 0)
-        {
-            minutesString = ":" + minutes;
-        }
-        else
-        {
-            minutesString = "";
-        }
-        
-        String totalInvestedHoursString = hoursString + minutesString;
-        return totalInvestedHoursString;
+        int totalSeconds = (int)_investedHours;
+        int hours = totalSeconds / 3600;
+        int minutes = (totalSeconds % 3600) / 60;
+
+        return new InvestedTimeString(hours.ToString(), minutes.ToString());
     }
 
     public String GetCurrentStageName()

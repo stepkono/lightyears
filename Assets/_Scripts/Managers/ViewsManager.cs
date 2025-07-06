@@ -31,6 +31,9 @@ public class ViewsManager : MonoBehaviour
 
     // View -> Planet Details
     [SerializeField] private GameObject viewPlanetDetails;
+    
+    // View -> Invest Hours
+    [SerializeField] private GameObject viewInvestHours;
 
     public GameObject CurrentActiveView { get; private set; }
 
@@ -114,6 +117,33 @@ public class ViewsManager : MonoBehaviour
         ActivateViewMain();
         CurrentActiveView = null;
     }
+
+    public void ActivateInvestHoursView(HobbyManager hobby)
+    {
+        CurrentActiveView.gameObject.SetActive(false);
+        
+        OnHobbyCreationViewActivation?.Invoke(true);
+        
+        CinemachineCamera centerPlanetCam = hobby.gameObject.transform.Find("PlanetContainer").Find("CenterPlanetCam").GetComponent<CinemachineCamera>();
+        _camerasManager.SetCurrentCamera(centerPlanetCam);
+        
+        viewInvestHours.SetActive(true);
+        TimerSlider timerSlider = viewInvestHours.transform.Find("Mask").Find("Slider").GetComponent<TimerSlider>();
+        timerSlider.SetHobby(hobby);
+        
+        CurrentActiveView = viewInvestHours;
+    }
+    
+    public void DeactivateInvestHoursView(HobbyManager hobby)
+    {
+        viewInvestHours.SetActive(false);
+        
+        OnHobbyCreationViewActivation?.Invoke(false);
+        PlanetManager planetManager = hobby.gameObject.transform.Find("PlanetContainer").GetComponent<PlanetManager>();
+        
+        ActivatePlanetDetailView(planetManager);
+    }
+    
 
     public void DeactivateCurrentView()
     {
@@ -214,9 +244,12 @@ public class ViewsManager : MonoBehaviour
 
         // Total invested hours 
         var totalHoursInvested = hobby.GetTotalInvestedHoursAsString();
+        Debug.Log($"TOTAL INVESTED HOURS: {totalHoursInvested.Hours}h {totalHoursInvested.Minutes}min");
         var hoursCountTextField = viewRoot.Find("HoursInvested").Find("HoursCount");
-        hoursCountTextField.GetComponent<TMP_Text>().text = totalHoursInvested;
-
+        var minCountTextField = viewRoot.Find("HoursInvested").Find("MinutesCount");
+        hoursCountTextField.GetComponent<TMP_Text>().text = totalHoursInvested.Hours;
+        minCountTextField.GetComponent<TMP_Text>().text = totalHoursInvested.Minutes;
+        
         // Name of the current development stage of the planet
         var stageName = hobby.GetCurrentStageName();
         var stageNameTextField = viewRoot.Find("HobbyStats").Find("LifeStageName");
@@ -263,6 +296,10 @@ public class ViewsManager : MonoBehaviour
             var hoursInvestedColor = hoursCountTextField.GetComponent<TMP_Text>().color;
             hoursInvestedColor.a = Mathf.Lerp(from, to, interpolator);
             hoursCountTextField.GetComponent<TMP_Text>().color = hoursInvestedColor;
+            
+            var minCountTextFieldColor = hoursCountTextField.GetComponent<TMP_Text>().color;
+            minCountTextFieldColor.a = Mathf.Lerp(from, to, interpolator);
+            minCountTextField.GetComponent<TMP_Text>().color = minCountTextFieldColor;
 
             var stageNameColor = stageNameTextField.GetComponent<TMP_Text>().color;
             stageNameColor.a = Mathf.Lerp(from, to, interpolator);

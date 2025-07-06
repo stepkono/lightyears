@@ -5,6 +5,7 @@ public class ButtonsManager : MonoBehaviour
 {
     private Controller _controller;
     private HobbyManager _selectedHobby; 
+    [SerializeField] ViewsManager viewsManager;
 
     private void Awake()
     {
@@ -25,6 +26,11 @@ public class ButtonsManager : MonoBehaviour
     {
         Debug.Log("[DEBUG]: CLICKED BUTTON hours.");
         _selectedHobby.InvestHours(1);
+    }
+
+    public void OpenViewInvestHours()
+    {
+        viewsManager.ActivateInvestHoursView(_selectedHobby);
     }
 
     public void SetSelectedHobby(HobbyManager hobby)

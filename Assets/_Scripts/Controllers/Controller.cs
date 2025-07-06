@@ -69,4 +69,9 @@ public class Controller : MonoBehaviour
             planet.GetComponent<HobbyManager>().ActivateRendering();
         }
     }
+
+    public void TerminateInvestHoursView(HobbyManager hobby)
+    {
+        _viewsManager.DeactivateInvestHoursView(hobby);
+    }
 }
