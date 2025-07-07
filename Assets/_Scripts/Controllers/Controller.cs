@@ -58,15 +58,18 @@ public class Controller : MonoBehaviour
         _viewsManager.ActivateHobbyCreationView();
     }
     
-    public void SaveCurrentHobby()
+    public void SaveCurrentHobby(bool launched)
     {
-        // Save Hobby
-        hobbyCreator.GetComponent<HobbyCreator>().SaveCurrentHobby();
-        
-        // Reactivate rendering for system planets
-        foreach (GameObject planet in systemManager.GetComponent<SystemManager>().HobbyPlanets)
+        if (launched)
         {
-            planet.GetComponent<HobbyManager>().ActivateRendering();
+            // Save Hobby
+            hobbyCreator.GetComponent<HobbyCreator>().SaveCurrentHobby();
+        
+            // Reactivate rendering for system planets
+            foreach (GameObject planet in systemManager.GetComponent<SystemManager>().HobbyPlanets)
+            {
+                planet.GetComponent<HobbyManager>().ActivateRendering();
+            }
         }
     }
 

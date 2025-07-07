@@ -17,7 +17,7 @@ MonoBehaviour:
     To: TopDownCamera
     Blend:
       Style: 5
-      Time: 1
+      Time: 0.7
       CustomCurve:
         serializedVersion: 2
         m_Curve:
@@ -46,7 +46,7 @@ MonoBehaviour:
     To: PlanetCam
     Blend:
       Style: 1
-      Time: 1
+      Time: 0.7
       CustomCurve:
         serializedVersion: 2
         m_Curve: []
@@ -97,7 +97,7 @@ MonoBehaviour:
     To: MainSceneCamera
     Blend:
       Style: 5
-      Time: 1
+      Time: 0.7
       CustomCurve:
         serializedVersion: 2
         m_Curve:
@@ -126,7 +126,7 @@ MonoBehaviour:
     To: MainSceneCamera
     Blend:
       Style: 5
-      Time: 1
+      Time: 0.7
       CustomCurve:
         serializedVersion: 2
         m_Curve:

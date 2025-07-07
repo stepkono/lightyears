@@ -1,5 +1,8 @@
 using System;
+using _Scripts;
+using TMPro;
 using UnityEngine;
+using Buffer = _Scripts.Buffer;
 
 public class ButtonsManager : MonoBehaviour
 {
@@ -17,15 +20,25 @@ public class ButtonsManager : MonoBehaviour
         _controller.CreateNewHobby();
     }
 
-    public void SaveCurrentHobby()
-    {
-        _controller.SaveCurrentHobby();
-    }
-
     public void addHours()
     {
         Debug.Log("[DEBUG]: CLICKED BUTTON hours.");
         _selectedHobby.InvestHours(1);
+    }
+
+    public void AcceptInvestedTime()
+    {
+        _selectedHobby.InvestHours(Buffer.investedSeconds);
+        Buffer.investedSeconds = 0;
+        
+        viewsManager.CurrentActiveView
+            .transform.Find("Mask/Slider/Background/Interactables/HoursInputField")
+            .GetComponent<TMP_InputField>().text = "";
+        viewsManager.CurrentActiveView
+            .transform.Find("Mask/Slider/Background/Interactables/MinutesInputField")
+            .GetComponent<TMP_InputField>().text = "";
+        
+        _controller.TerminateInvestHoursView(_selectedHobby);
     }
 
     public void OpenViewInvestHours()
@@ -43,4 +56,13 @@ public class ButtonsManager : MonoBehaviour
         _selectedHobby = null; 
     }
     
+    public void GetBackFromHobbyCreationView()
+    {
+        AppEvents.RaiseHobbyLaunched(false);
+    }
+
+    public void GetBackFromInvestHoursView()
+    {
+        _controller.TerminateInvestHoursView(_selectedHobby);
+    }
 }

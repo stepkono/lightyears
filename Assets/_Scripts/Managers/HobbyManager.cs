@@ -12,11 +12,11 @@ public class StagesContainer
     public StagesContainer(GameObject evoContainer, GameObject destContainer)
     {
         /*EVOLUTION*/
-        Stage evoStage1 = new Stage("first", 0, 0, true);
-        Stage evoStage2 = new Stage("second", 5 * 3600, 1, true);
-        Stage evoStage3 = new Stage("third", 5 * 3600, 2, true);
-        Stage evoStage4 = new Stage("fourth", 5 * 3600, 3, true);
-        Stage evoStage5 = new Stage("fifth", 5 * 3600, 4, true);
+        Stage evoStage1 = new Stage("Ursprung", 0, 0, true);
+        Stage evoStage2 = new Stage("Erwachen", 5 * 3600, 1, true);
+        Stage evoStage3 = new Stage("Entfaltung", 5 * 3600, 2, true);
+        Stage evoStage4 = new Stage("Veredelung", 5 * 3600, 3, true);
+        Stage evoStage5 = new Stage("Zenith", 5 * 3600, 4, true);
         _evoStages.Add(evoStage1);
         _evoStages.Add(evoStage2);
         _evoStages.Add(evoStage3);
@@ -38,11 +38,11 @@ public class StagesContainer
         }
 
         /*DESTRUCTION*/
-        Stage destStage = new Stage("first_dest", 0, false);
-        Stage destStage2 = new Stage("second_dest", 1, false);
-        Stage destStage3 = new Stage("third_dest", 2, false);
-        Stage destStage4 = new Stage("fourth_dest", 3, false);
-        Stage destStage5 = new Stage("fifth_dest", 4, false);
+        Stage destStage = new Stage("Auslöschung", 0, false);
+        Stage destStage2 = new Stage("Zerfall", 1, false);
+        Stage destStage3 = new Stage("Erosion", 2, false);
+        Stage destStage4 = new Stage("Verblassen", 3, false);
+        Stage destStage5 = new Stage("Rissbildung", 4, false);
         _destStages.Add(destStage);
         _destStages.Add(destStage2);
         _destStages.Add(destStage3);
@@ -111,11 +111,13 @@ public struct InvestedTimeString
 {
     public string Hours;
     public string Minutes;
+    public string Seconds;
 
-    public InvestedTimeString(string hours, string minutes)
+    public InvestedTimeString(string hours, string minutes, String seconds)
     {
         Hours = hours;
         Minutes = minutes;
+        Seconds = seconds;
     }
 }
 
@@ -200,7 +202,7 @@ public class HobbyManager : MonoBehaviour
             {
                 _isGrowing = true;
                 _deltaHours = 0;
-                Debug.Log("[DEBUG]: Planet recovering.");
+                Debug.Log("[DEBUG]: Planet recovering...");
                 destContainer.transform.GetChild(_currentStage.StageIndex).gameObject.SetActive(false);
                 evoContainer.transform.GetChild(_currentStage.StageIndex).gameObject.SetActive(true);
             }
@@ -216,7 +218,6 @@ public class HobbyManager : MonoBehaviour
 
         evoContainer.transform.GetChild(_currentStage.StageIndex).gameObject.SetActive(true);
         _deltaHours = 0;
-        Debug.Log("[DEBUG]: DELTA HOURS SET TO 0.");
     }
 
     private void DowngradeStage()
@@ -251,7 +252,7 @@ public class HobbyManager : MonoBehaviour
             _rotatedDegrees = 0; // reset internal interval counter 
             if (!_hasInvestedHoursInThisInterval)
             {
-                Debug.Log("[DEBUG]: Lazy bitch.");
+                Debug.Log("[DEBUG]: Planet stage got downgraded.");
                 _intervalStreak = 0; 
                 DowngradeStage();
             }
@@ -282,6 +283,8 @@ public class HobbyManager : MonoBehaviour
         int minutes = (int)(newHours / 60) % 60;
         int seconds = (int)(newHours % 60);
         
+        Debug.Log("[DEBUG]: Seconds invested: " + newHours);
+        
         _investedHours += newHours;
         _deltaHours += newHours;
         _hasInvestedHoursInThisInterval = true;
@@ -294,8 +297,9 @@ public class HobbyManager : MonoBehaviour
         int totalSeconds = (int)_investedHours;
         int hours = totalSeconds / 3600;
         int minutes = (totalSeconds % 3600) / 60;
+        int seconds = (totalSeconds % 3600) % 60;
 
-        return new InvestedTimeString(hours.ToString(), minutes.ToString());
+        return new InvestedTimeString(hours.ToString(), minutes.ToString(), seconds.ToString());
     }
 
     public String GetCurrentStageName()

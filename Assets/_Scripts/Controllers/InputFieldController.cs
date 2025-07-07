@@ -2,11 +2,13 @@ using System;
 using _Scripts;
 using TMPro;
 using UnityEngine;
+using Buffer = _Scripts.Buffer;
 
 public class InputFieldController : MonoBehaviour
 {
     [SerializeField] private HobbyCreator hobbyCreator;
-
+    private HobbyManager _hobby; 
+    
     private Controller _controller; 
 
     private void Awake()
@@ -36,7 +38,38 @@ public class InputFieldController : MonoBehaviour
         hobbyCreator.SetInterval(daysInterval);
     }
 
-    private void ResetInputField()
+    public void SetHours(string hours)
+    {
+        if (int.TryParse(hours, out int parsedHours))
+        {
+            int seconds = parsedHours * 3600;
+            Buffer.AddToBuffer(seconds);
+        }
+        else
+        {
+            Debug.LogWarning("Invalid hours input: " + hours);
+        }
+    }
+
+    public void SetMinutes(string minutes)
+    {
+        if (int.TryParse(minutes, out int parsedMinutes))
+        {
+            int seconds = parsedMinutes * 60;
+            Buffer.AddToBuffer(seconds);
+        }
+        else
+        {
+            Debug.LogWarning("Invalid hours input: " + minutes);
+        }
+    }
+
+    public void SetHobby(HobbyManager hobby)
+    {
+        _hobby = hobby;
+    }
+    
+    private void ResetInputField(bool launched)
     {
         gameObject.GetComponent<TMP_InputField>().text = "";
         Debug.Log("ResetInputField has been called");

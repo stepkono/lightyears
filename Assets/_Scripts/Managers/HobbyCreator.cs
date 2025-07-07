@@ -1,4 +1,5 @@
 using System;
+using _Scripts;
 using Unity.Cinemachine;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -18,6 +19,15 @@ public class HobbyCreator : MonoBehaviour
     {
         _camerasManager = CamerasManager.GetInstance();
         _systemManager = systemManager.GetComponent<SystemManager>();
+        AppEvents.OnHobbyLaunched += DestroyHobby;
+    }
+
+    private void DestroyHobby(bool launched)
+    {
+        if (!launched)
+        {
+            Destroy(_currentHobbyPlanet);
+        }
     }
     
     public void CreateNewHobby()
@@ -38,9 +48,6 @@ public class HobbyCreator : MonoBehaviour
         GameObject hobbyPlanet = planetPrefabs[Random.Range(0, planetPrefabs.Length)];
         _currentHobbyPlanet = Instantiate(hobbyPlanet, new Vector3(0, 0, 0), Quaternion.identity);
         Debug.Log("[INFO]: Hobby planet has been instantiated.");
-        
-        //TODO: THIS IS DEBUG ONLY 
-        //_currentHobbyPlanet.GetComponent<HobbyManager>().InvestHours(25);
         
         // Set center view camera
         Transform centerCamera = _currentHobbyPlanet.transform.Find("PlanetContainer/CenterPlanetCam"); 
@@ -82,7 +89,7 @@ public class HobbyCreator : MonoBehaviour
         // Pass Hobby over to SystemManager for correct order insertion 
         _systemManager.SaveNewHobby(_currentHobbyPlanet.GetComponent<HobbyManager>());
         // Switch back to MainView 
-        ViewsManager.Instance.DeactivateHobbyCreationView();
+        ViewsManager.Instance.DeactivateHobbyCreationView(true);
         _camerasManager.SetCurrentCamera(mainSceneCamera);
         
         // Reset contents of this HobbyCreator

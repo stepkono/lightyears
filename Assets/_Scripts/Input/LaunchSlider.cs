@@ -45,7 +45,7 @@ public class LaunchSlider : MonoBehaviour, IBeginDragHandler, IEndDragHandler
             _slider.value = 1f;
             
             // Inform ViewsManager to close this view
-            AppEvents.RaiseHobbyLaunched();
+            AppEvents.RaiseHobbyLaunched(true);
             
             Debug.Log("[DEBUG]: LaunchSlider: HOBBY LAUNCHED.");
             _slider.value = 0f; 

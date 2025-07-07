@@ -50,6 +50,7 @@ public class TimerSlider : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     // Canvas groups for fading
     private CanvasGroup _timerTextGroup;
     private CanvasGroup _inputTimeUIGroup;
+    private CanvasGroup _interactables; 
     private CanvasGroup _dynamicTitleGroup;
     
     // Timer variables
@@ -110,6 +111,8 @@ public class TimerSlider : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         _dynamicTitleGroup = _dynamicTitle.GetComponent<CanvasGroup>();
         if (_dynamicTitleGroup == null)
             _dynamicTitleGroup = _dynamicTitle.gameObject.AddComponent<CanvasGroup>();
+        
+        _interactables = transform.Find("Background").Find("Interactables").GetComponent<CanvasGroup>();
     }
     
     private void ResetToInitialState()
@@ -134,6 +137,7 @@ public class TimerSlider : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         _timerTextGroup.alpha = 0f;
         _inputTimeUIGroup.alpha = 1f;
         _dynamicTitleGroup.alpha = 1f;
+        _interactables.alpha = 1f;
         
         // Reset slider
         _slider.value = 0f;
@@ -246,6 +250,7 @@ public class TimerSlider : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         _currentState = TimerState.TimerRunning;
         _timerIsRunning = true;
         _inputTimeUI.gameObject.SetActive(false);
+        _interactables.gameObject.SetActive(false);
         _elapsedTime = 0f;
         
         StartCoroutine(FadeTextWithCallback(_dynamicTitleGroup, "Timer läuft...", 0.3f, null));
@@ -261,6 +266,7 @@ public class TimerSlider : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         {
             _timerTextGroup.alpha = val;
             _inputTimeUIGroup.alpha = Mathf.Abs(val - 1f);
+            _interactables.alpha = Mathf.Abs(val - 1f);
         }
     }
 
@@ -274,6 +280,8 @@ public class TimerSlider : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         
         // Step 3: Wait 3 seconds
         yield return new WaitForSeconds(3f);
+        
+        ResetAfterAnimation();
         
         controller.TerminateInvestHoursView(_hobby);
         
@@ -361,9 +369,11 @@ public class TimerSlider : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         // Deactivate timer text, activate input time UI
         _timerText.gameObject.SetActive(false);
         _inputTimeUI.gameObject.SetActive(true);
+        _interactables.gameObject.SetActive(true);
         
         // Fade in input time UI
         StartCoroutine(FadeCanvasGroup(_inputTimeUIGroup, 0f, 1f, 0.3f));
+        StartCoroutine(FadeCanvasGroup(_interactables, 0f, 1f, 0.3f));
         
         // Reset all state
         ResetToInitialState();

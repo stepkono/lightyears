@@ -1,14 +1,17 @@
 using System;
 using System.Collections.Generic;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class SystemManager : MonoBehaviour
 {
     public LinkedList<GameObject> HobbyPlanets { get; private set; }
+    [SerializeField] private CinemachineCamera topDownCamera;
 
     private void Awake()
     {
         HobbyPlanets = new LinkedList<GameObject>();
+        topDownCamera = topDownCamera.GetComponent<CinemachineCamera>();
     }
 
     public void SaveNewHobby(HobbyManager hobby)
@@ -51,7 +54,7 @@ public class SystemManager : MonoBehaviour
             {
                 HobbyPlanets.AddLast(hobbyPlanet);
             }
-            
+            topDownCamera.transform.Translate(0, 15.2f, 0, Space.World);
             UpdateOrbits();
         }
     }
