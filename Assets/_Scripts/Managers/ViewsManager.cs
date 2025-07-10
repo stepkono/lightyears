@@ -292,7 +292,7 @@ public class ViewsManager : MonoBehaviour
 
         // Get sprites and images to set alpha channel on dynamically
         SpriteRenderer spriteRenderer = gradientPlanet.GetComponent<SpriteRenderer>();
-        GameObject intervalButtonContainer = viewHobbyCreation.transform.Find("IntervalSelectionContainer").gameObject;
+        CanvasGroup intervalButtonContainer = viewHobbyCreation.transform.Find("IntervalSelectionContainer").GetComponent<CanvasGroup>();
         CanvasGroup shareButtonContainer = viewHobbyCreation.transform.Find("ShareButtonContainer").GetComponent<CanvasGroup>();
         CanvasGroup reminderButtonContainer = viewHobbyCreation.transform.Find("ReminderButtonContainer").GetComponent<CanvasGroup>();
 
@@ -301,22 +301,8 @@ public class ViewsManager : MonoBehaviour
             // Interval Button
             float interpolatorIntervalButton =
                 elapsedTimeIntervalButton / duration; // Current ratio between from and to 
-            foreach (Transform child in intervalButtonContainer.transform)
-            {
-                if (child.TryGetComponent<Image>(out var intervalButtonImage))
-                {
-                    var intervalButtonColor = intervalButtonImage.color; // Get current color 
-                    intervalButtonColor.a = Mathf.Lerp(from, to, interpolatorIntervalButton); // Update gradient alpha 
-                    intervalButtonImage.color = intervalButtonColor; // Set updated alpha
-                }
-
-                if (child.TryGetComponent<TMP_Text>(out var text))
-                {
-                    var textColor = text.color;
-                    textColor.a = Mathf.Lerp(from, to, interpolatorIntervalButton);
-                    text.color = textColor;
-                }
-            }
+            
+            intervalButtonContainer.alpha = Mathf.Lerp(from, to, interpolatorIntervalButton);
 
             // Share Button
             float interpolatorShareButton = elapsedTimeShareButton / duration; // Current ratio between from and to
