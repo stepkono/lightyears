@@ -27,7 +27,7 @@ public class PlanetManager : MonoBehaviour
 
     private void Update()
     {
-        float degPerSecond = 5; 
+        float degPerSecond = 10; 
         _planetRoot.transform.Rotate(0, degPerSecond * Time.deltaTime, 0);
     }
 
