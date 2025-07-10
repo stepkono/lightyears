@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using _Scripts.Types;
+using TMPro;
 using UnityEngine;
 
 public class StagesContainer
@@ -268,6 +269,8 @@ public class HobbyManager : MonoBehaviour
     public void SetHobbyData(HobbyData hobbyData)
     {
         _hobbyData = hobbyData;
+        TMP_Text visualName = transform.Find("PlanetContainer/PlanetRoot/Canvas/HobbyName").GetComponent<TMP_Text>();
+        visualName.text = _hobbyData.GetName().ToUpper();
     }
 
     public void SetRotationSpeed(float degSecond)

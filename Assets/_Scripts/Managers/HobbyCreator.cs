@@ -95,10 +95,10 @@ public class HobbyCreator : MonoBehaviour
     {
         // Save user input data in HobbyData
         _currentHobbyPlanet.GetComponent<HobbyManager>().SetHobbyData(_currentHobbyData);
-        //_currentHobbyPlanet.GetComponent<HobbyManager>().SetCurrentPlanetModel(_currentHobbyPlanet);
         
         // Pass Hobby over to SystemManager for correct order insertion 
         _systemManager.SaveNewHobby(_currentHobbyPlanet.GetComponent<HobbyManager>());
+        
         // Switch back to MainView 
         ViewsManager.Instance.DeactivateHobbyCreationView(true);
         _camerasManager.SetCurrentCamera(mainSceneCamera);
