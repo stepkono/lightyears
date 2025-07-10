@@ -24,9 +24,14 @@ public class ShareButtonManager : MonoBehaviour
         StartCoroutine(ActivateGradient(0, 1));
     }
     
-    public void GradientOff()
+    public void GradientOff(bool hardReset = false)
     {
-        StartCoroutine(DeactivatGradient(1, 0));
+        if (!hardReset)
+        {
+            StartCoroutine(DeactivatGradient(1, 0));
+        }
+
+        gradient.GetComponent<CanvasGroup>().alpha = 0;
     }
 
     IEnumerator ActivateGradient(float from, float to)
@@ -66,6 +71,4 @@ public class ShareButtonManager : MonoBehaviour
         }
         gradient.SetActive(false);
     }
-    
-    
 }

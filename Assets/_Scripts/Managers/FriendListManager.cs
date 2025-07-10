@@ -47,9 +47,9 @@ public class FriendListManager : MonoBehaviour
         return _friends.Count;
     }
 
-    public void ResetVisualSection()
+    public void ResetVisualSection(bool hardReset = false)
     {
-        _shareButtonManager.GradientOff();
+        _shareButtonManager.GradientOff(hardReset);
         _friendListWindowInput.RemoveSelection();
     }
 

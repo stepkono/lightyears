@@ -33,8 +33,9 @@ public class InputFieldController : MonoBehaviour
 
     public void SetInterval(string interval)
     {
-        hobbyCreator.ActivateInterval(); // TODO: This is only for debugging 
+        hobbyCreator.ActivateInterval();
         int daysInterval = Int32.Parse(interval);   
+        Debug.Log("INTERVAL SET: " + daysInterval);
         hobbyCreator.SetInterval(daysInterval);
     }
 

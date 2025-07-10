@@ -97,7 +97,7 @@ public class ViewsManager : MonoBehaviour
 
         OnHobbyCreationViewActivation?.Invoke(false);
         
-        friendListManager.GetComponent<FriendListManager>().ResetVisualSection();
+        friendListManager.GetComponent<FriendListManager>().ResetVisualSection(true);
         backgroundGradient.SetActive(false);
         viewHobbyCreation.SetActive(false);
         _camerasManager.SetCurrentCamera(mainSceneCamera);
