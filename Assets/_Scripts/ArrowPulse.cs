@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using System.Collections;
 
@@ -8,9 +9,13 @@ public class ArrowPulse : MonoBehaviour
 
     private Vector3 _startPos;
 
-    void Start()
+    void Awake()
     {
         _startPos = transform.localPosition;
+    }
+
+    void OnEnable()
+    {
         float direction = gameObject.name == "Up" ? 1f : -1f;
         StartCoroutine(PulseLoop(direction));
     }
