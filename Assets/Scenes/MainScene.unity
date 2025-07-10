@@ -2809,7 +2809,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 2
+  m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -9677,9 +9677,21 @@ PrefabInstance:
       propertyPath: viewsManager
       value: 
       objectReference: {fileID: 1437183253}
+    - target: {fileID: 609282609934294704, guid: a788d2f1b463d4766b755d95a2d9c682, type: 3}
+      propertyPath: m_margin.z
+      value: -151.93782
+      objectReference: {fileID: 0}
     - target: {fileID: 848912964388572072, guid: a788d2f1b463d4766b755d95a2d9c682, type: 3}
       propertyPath: m_SizeDelta.y
       value: 842
+      objectReference: {fileID: 0}
+    - target: {fileID: 951168777355191136, guid: a788d2f1b463d4766b755d95a2d9c682, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 51
+      objectReference: {fileID: 0}
+    - target: {fileID: 1046704726421749634, guid: a788d2f1b463d4766b755d95a2d9c682, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -259.36
       objectReference: {fileID: 0}
     - target: {fileID: 1635432456394755309, guid: a788d2f1b463d4766b755d95a2d9c682, type: 3}
       propertyPath: m_SizeDelta.y
@@ -9698,6 +9710,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3021640479814774895, guid: a788d2f1b463d4766b755d95a2d9c682, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 868
+      objectReference: {fileID: 0}
+    - target: {fileID: 3021640479814774895, guid: a788d2f1b463d4766b755d95a2d9c682, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 411.09998
       objectReference: {fileID: 0}
@@ -9708,6 +9724,10 @@ PrefabInstance:
     - target: {fileID: 3525556803042551966, guid: a788d2f1b463d4766b755d95a2d9c682, type: 3}
       propertyPath: m_SizeDelta.y
       value: -285.36
+      objectReference: {fileID: 0}
+    - target: {fileID: 4327717468870634154, guid: a788d2f1b463d4766b755d95a2d9c682, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 51
       objectReference: {fileID: 0}
     - target: {fileID: 4343147174338319112, guid: a788d2f1b463d4766b755d95a2d9c682, type: 3}
       propertyPath: m_Pivot.x
@@ -9789,6 +9809,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4424179926130833290, guid: a788d2f1b463d4766b755d95a2d9c682, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -285.36
+      objectReference: {fileID: 0}
+    - target: {fileID: 4616120092757759847, guid: a788d2f1b463d4766b755d95a2d9c682, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -259.36
+      objectReference: {fileID: 0}
     - target: {fileID: 4992978341571438677, guid: a788d2f1b463d4766b755d95a2d9c682, type: 3}
       propertyPath: m_fontColor.a
       value: 0
@@ -9816,6 +9844,10 @@ PrefabInstance:
     - target: {fileID: 6895916766913169096, guid: a788d2f1b463d4766b755d95a2d9c682, type: 3}
       propertyPath: m_Name
       value: LifeStageName
+      objectReference: {fileID: 0}
+    - target: {fileID: 7423986466118344112, guid: a788d2f1b463d4766b755d95a2d9c682, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 51
       objectReference: {fileID: 0}
     - target: {fileID: 7971406918795034149, guid: a788d2f1b463d4766b755d95a2d9c682, type: 3}
       propertyPath: m_IsActive
@@ -15254,7 +15286,7 @@ Canvas:
   m_GameObject: {fileID: 1950710134}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 1671103435}
   m_PlaneDistance: 42.2
   m_PixelPerfect: 1
