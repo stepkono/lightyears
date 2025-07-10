@@ -181,6 +181,23 @@ public class ViewsManager : MonoBehaviour
         }
     }
 
+    public void ToggleGuidanceArrow()
+    {
+        GameObject arrowUp = viewMain.transform.Find("VisualGuidanceArrow/Up").gameObject;
+        GameObject arrowDown = viewMain.transform.Find("VisualGuidanceArrow/Down").gameObject;
+        
+        if (arrowUp.activeSelf)
+        {
+            arrowUp.SetActive(false);
+            arrowDown.SetActive(true);
+        }
+        else
+        {
+            arrowUp.SetActive(true);
+            arrowDown.SetActive(false);
+        }
+    }
+
     private void ActivateViewMain()
     {
         viewMain.SetActive(true);

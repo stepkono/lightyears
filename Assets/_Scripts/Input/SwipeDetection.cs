@@ -187,8 +187,7 @@ public class SwipeDetection : MonoBehaviour
                     _viewsManager.DeactivateCurrentView(); 
                 }
                 _camerasManager.SetCurrentCamera(_mainSceneCamera);
-                //_mainSceneCamera.GetComponent<CinemachineCamera>().Priority = 0;
-                //_topDownCamera.GetComponent<CinemachineCamera>().Priority = 1;
+                _viewsManager.ToggleGuidanceArrow();
                 break;
             }
             case Direction.DOWN:
@@ -200,8 +199,7 @@ public class SwipeDetection : MonoBehaviour
                     _viewsManager.DeactivateCurrentView(); 
                 }
                 _camerasManager.SetCurrentCamera(_topDownCamera);
-                //_topDownCamera.GetComponent<CinemachineCamera>().Priority = 0;
-                //_mainSceneCamera.GetComponent<CinemachineCamera>().Priority = 1;
+                _viewsManager.ToggleGuidanceArrow();
                 break;
             }
             case Direction.LEFT: Debug.Log("Swipe LEFT"); break;
