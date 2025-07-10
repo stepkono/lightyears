@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using _Scripts;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -78,6 +79,16 @@ public class HobbyCreator : MonoBehaviour
             return; 
         }
         _currentHobbyData.SetDaysInterval(days);
+    }
+
+    public void AddFriendsToHobby(List<string> friends)
+    {
+        _currentHobbyData.AddFriends(friends);
+    }
+
+    public void RemoveFriendsFromHobby()
+    {
+        _currentHobbyData.RemoveFriends();
     }
 
     public void SaveCurrentHobby()

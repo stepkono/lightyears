@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using _Scripts;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -71,6 +72,16 @@ public class Controller : MonoBehaviour
                 planet.GetComponent<HobbyManager>().ActivateRendering();
             }
         }
+    }
+
+    public void RemoveFusionHobby()
+    {
+        hobbyCreator.GetComponent<HobbyCreator>().RemoveFriendsFromHobby();
+    }
+
+    public void MakeFusionHobby(List<string> friends)
+    {
+        hobbyCreator.GetComponent<HobbyCreator>().AddFriendsToHobby(friends);
     }
 
     public void TerminateInvestHoursView(HobbyManager hobby)

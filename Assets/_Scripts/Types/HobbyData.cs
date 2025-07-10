@@ -1,5 +1,7 @@
 
 using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class HobbyData
 {
@@ -8,6 +10,7 @@ public class HobbyData
     public bool IntervalSet { get; private set; } = false; 
     private bool _reminder = false;  
     private int _daysInterval;
+    private List<string> _friends = new List<string>(); 
 
     /*SETTERS*/
     public void SetName(string name)
@@ -27,6 +30,19 @@ public class HobbyData
     {
         IntervalSet = true;
     }
+
+    public void AddFriends(List<string> friends)
+    {
+        _friends = friends;
+        Debug.Log("Friends: " + string.Join(", ", _friends));
+    }
+
+    public void RemoveFriends()
+    {
+        _friends.Clear();
+        Debug.Log("[DEBUG]: HobbyData: All friends removed. List length: " + _friends.Count);
+    }
+    
     public void SwitchReminder()
     {
         if (IntervalSet && _reminder == false)

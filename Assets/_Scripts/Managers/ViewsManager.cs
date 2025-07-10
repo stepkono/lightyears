@@ -26,7 +26,7 @@ public class ViewsManager : MonoBehaviour
     [SerializeField] private GameObject viewHobbyCreation;
     [SerializeField] private GameObject hobbyCreationView;
     [SerializeField] private GameObject backgroundGradient;
-
+    [SerializeField] private GameObject friendListManager; 
     [SerializeField] private GameObject systemUserName;
 
     // View -> Planet Details
@@ -77,13 +77,27 @@ public class ViewsManager : MonoBehaviour
         StartCoroutine(ActivateBackgroundAfterDelay(0.5f, 0, 1));
     }
 
+    public void OpenFriendsList()
+    {
+        GameObject friendsList = viewHobbyCreation.transform.Find("ViewFriendsList").gameObject;
+        friendsList.SetActive(true);
+    }
+
+    public void CloseFriendsList()
+    {
+        GameObject friendsList = viewHobbyCreation.transform.Find("ViewFriendsList").gameObject;
+        friendsList.SetActive(false);
+        Debug.Log("CLOSED");
+    }
+
     public void DeactivateHobbyCreationView(bool launched)
     {
         // Unsub from launch event 
         AppEvents.OnHobbyLaunched -= DeactivateHobbyCreationView;
 
         OnHobbyCreationViewActivation?.Invoke(false);
-
+        
+        friendListManager.GetComponent<FriendListManager>().ResetVisualSection();
         backgroundGradient.SetActive(false);
         viewHobbyCreation.SetActive(false);
         _camerasManager.SetCurrentCamera(mainSceneCamera);
@@ -290,29 +304,11 @@ public class ViewsManager : MonoBehaviour
             // Share Button
             float interpolatorShareButton = elapsedTimeShareButton / duration; // Current ratio between from and to
             shareButtonContainer.alpha = Mathf.Lerp(from, to, interpolatorShareButton);
-            /*foreach (Transform child in shareButtonContainer.transform)
-            {
-                if (child.TryGetComponent<Image>(out var shareButtonImage))
-                {
-                    var shareButtonColor = shareButtonImage.color; // Get current color 
-                    shareButtonColor.a = Mathf.Lerp(from, to, interpolatorShareButton); // Update gradient alpha 
-                    shareButtonImage.color = shareButtonColor; // Set updated alpha
-                }
-            }*/
 
             //  Reminder Button 
             float interpolatorReminderButton =
                 elapsedTimeReminderButton / duration; // Current ratio between from and to 
             reminderButtonContainer.alpha = Mathf.Lerp(from, to, interpolatorReminderButton);
-            /*foreach (Transform child in reminderButtonContainer.transform)
-            {
-                if (child.TryGetComponent<Image>(out var reminderButtonImage))
-                {
-                    var reminderButtonColor = reminderButtonImage.color; // Get current color 
-                    reminderButtonColor.a = Mathf.Lerp(from, to, interpolatorReminderButton); // Update gradient alpha 
-                    reminderButtonImage.color = reminderButtonColor; // Set updated alpha
-                }
-            }*/
 
             // Gradient 
             float interpolatorGradient = elapsedTimeGradient / duration; // Current ratio between from and to 
