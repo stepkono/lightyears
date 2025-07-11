@@ -87,7 +87,6 @@ public class ViewsManager : MonoBehaviour
     {
         GameObject friendsList = viewHobbyCreation.transform.Find("ViewFriendsList").gameObject;
         friendsList.SetActive(false);
-        Debug.Log("CLOSED");
     }
 
     public void DeactivateHobbyCreationView(bool launched)

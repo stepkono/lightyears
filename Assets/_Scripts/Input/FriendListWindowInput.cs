@@ -2,22 +2,81 @@ using System;
 using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FriendListWindowInput : MonoBehaviour
 {
     [SerializeField] private ViewsManager viewsManager;
     [SerializeField] private FriendListManager friendListManager;
 
+    private List<String> _friends = new List<string>(); 
+    private bool _saveAllowed = false;
+    
+    // Event and method to fire when CloseList() is called
+    public static event System.Action OnListClosed;
+    
+    public static void TriggerListClosed()
+    {
+        OnListClosed?.Invoke();
+    }
+
     public void CloseList()
     {
         viewsManager.CloseFriendsList();
         friendListManager.ToggleFusionHobby();
+        
+        // Fire the event to notify all subscribers
+        OnListClosed?.Invoke();
     }
 
     public void SaveSelection()
     {
-        viewsManager.CloseFriendsList();
-        friendListManager.SaveFriends();
+        if (_saveAllowed)
+        {
+            viewsManager.CloseFriendsList();
+            friendListManager.SaveFriends(_friends);
+        }
+    }
+
+    public void AddFriend(String friendName)
+    {
+        _friends.Add(friendName);
+        EnableSave();
+    }
+
+    public void RemoveFriend(String friendName)
+    {
+        _friends.Remove(friendName);
+        if (_friends.Count == 0)
+        {
+            DisableSave();
+        }
+    }
+    
+    public void EnableSave()
+    {
+        if (gameObject.name == "ButtonSaveFriends")
+        {
+            GetComponent<Button>().interactable = true;
+            Image img = GetComponent<Image>();
+            Color c = img.color;
+            c.a = 1f;
+            img.color = c;
+            _saveAllowed = true;
+        }
+    }
+
+    public void DisableSave()
+    {
+        if (gameObject.name == "ButtonSaveFriends")
+        {
+            GetComponent<Button>().interactable = false;
+            Image img = GetComponent<Image>();
+            Color c = img.color;
+            c.a = 0.5f;
+            img.color = c;
+            _saveAllowed = false;
+        }
     }
 
     public void RemoveSelection()
@@ -37,5 +96,11 @@ public class FriendListWindowInput : MonoBehaviour
                 friendsButton.Find("SelectedBackground").GetComponent<CanvasGroup>().alpha = 0;
             }
         }
+    }
+
+    public void Reset()
+    {
+        RemoveSelection();
+        DisableSave();
     }
 }
