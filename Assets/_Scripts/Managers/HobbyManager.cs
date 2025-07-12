@@ -91,7 +91,6 @@ public class StagesContainer
             }
             else
             {
-                Debug.Log("[DEBUG]: RETURNING CURRENT STAGE IN DESTRUCTION: " + currentStage.StageIndex);
                 return _destStages[currentStage.StageIndex];
             }
         }
@@ -167,12 +166,6 @@ public class HobbyManager : MonoBehaviour
         _isGrowing = true;
         _hasInvestedHoursInThisInterval = false;
         _currentStage = _stagesContainer.GetEvoStages().First();
-    }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        //SetRotationSpeed(0.00042f);
     }
 
     private void CheckForStageUpgrade()
@@ -281,10 +274,6 @@ public class HobbyManager : MonoBehaviour
     public void InvestHours(float newHours)
     {
         Debug.Log("[DEBUG]: Investing hours.");
-        
-        int hours = (int)(newHours / 3600);
-        int minutes = (int)(newHours / 60) % 60;
-        int seconds = (int)(newHours % 60);
         
         Debug.Log("[DEBUG]: Seconds invested: " + newHours);
         
