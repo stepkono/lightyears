@@ -253,7 +253,7 @@ public class TimerSlider : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         _interactables.gameObject.SetActive(false);
         _elapsedTime = 0f;
         
-        StartCoroutine(FadeTextWithCallback(_dynamicTitleGroup, "Timer läuft...", 0.3f, null));
+        StartCoroutine(FadeTextWithCallback(_dynamicTitleGroup, "Stoppuhr läuft...", 0.3f, null));
         Debug.Log("[DEBUG]: Timer has started.");
     }
 
@@ -284,17 +284,6 @@ public class TimerSlider : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         ResetAfterAnimation();
         
         controller.TerminateInvestHoursView(_hobby);
-        
-        //---------------------------------------------------------------//
-        
-        // Step 4: Change dynamic title to "Zeit eintragen"
-        //yield return StartCoroutine(FadeTextWithCallback(_dynamicTitleGroup, "Zeit eintragen", 0.3f, null));
-        
-        // Step 5: Fade out timer text
-        //yield return StartCoroutine(FadeCanvasGroup(_timerTextGroup, 1f, 0f, 0.3f));
-        
-        // Step 6: Reset everything for next use
-        //ResetAfterAnimation();
     }
     
     private IEnumerator AnimateTimerTextUpAndChangeColor(float duration)

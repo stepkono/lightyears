@@ -65,4 +65,9 @@ public class ButtonsManager : MonoBehaviour
     {
         _controller.TerminateInvestHoursView(_selectedHobby);
     }
+
+    public void ClosePopUpView()
+    {
+        viewsManager.CurrentActiveView.transform.Find("PopUp").gameObject.SetActive(false);
+    }
 }

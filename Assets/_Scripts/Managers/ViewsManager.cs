@@ -5,6 +5,7 @@ using TMPro;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.UI;
+using Buffer = _Scripts.Buffer;
 
 [DefaultExecutionOrder(-2)]
 public class ViewsManager : MonoBehaviour
@@ -102,9 +103,36 @@ public class ViewsManager : MonoBehaviour
         _camerasManager.SetCurrentCamera(mainSceneCamera);
         ActivateViewMain();
 
-        CurrentActiveView = null;
+        CurrentActiveView = viewMain;
+
+        if (Buffer.firstPlanetLaunch)
+        {
+            StartCoroutine(ActivatPopUp(0.7f, 0, 1));
+            Buffer.firstPlanetLaunch = false;
+        }
 
         Debug.Log("[DEBUG]: ViewsManager: Hobby creation view deactivated.");
+    }
+    
+    IEnumerator ActivatPopUp(float delay, float from, float to)
+    {
+        Debug.Log("[DEBUG]: ViewsManager: Activating pop up.");
+        Transform popUp = CurrentActiveView.transform.Find("PopUp"); 
+        CanvasGroup canvasGroup = popUp.GetComponent<CanvasGroup>();
+        yield return new WaitForSeconds(delay);
+        popUp.gameObject.SetActive(true);
+        
+        float elapsedTime = 0f;
+        float duration = 1f;
+
+        while (elapsedTime < duration)
+        {
+            // Interval Button
+            float interpolator = elapsedTime / duration; // Current ratio between from and to 
+            canvasGroup.alpha = Mathf.Lerp(from, to, interpolator);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
     }
 
     public void ActivatePlanetDetailView(PlanetManager planet)

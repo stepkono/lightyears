@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 119c1bd3601648f28a252a6030e067b6, type: 3}
   m_Name: UnityFigmaBridgeSettings
   m_EditorClassIdentifier: 
-  DocumentUrl: https://www.figma.com/design/6fVZPfH7LSY6KQo7fEHrNB/Untitled?node-id=114-2&t=fOKWgBIaJCdSccRK-1
+  DocumentUrl: https://www.figma.com/design/6fVZPfH7LSY6KQo7fEHrNB/Untitled?node-id=126-17&t=FcwcAvKFIYHXQ2BO-1
   BuildPrototypeFlow: 1
-  RunTimeAssetsScenePath: Assets/Scenes/FigmaImportScene.unity
+  RunTimeAssetsScenePath: Assets/Scenes/MainScene.unity
   EnableAutoLayout: 0
   ScreenBindingNamespace: 
   ServerRenderImageScale: 3
