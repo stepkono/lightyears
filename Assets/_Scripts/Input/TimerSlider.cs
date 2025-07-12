@@ -276,7 +276,7 @@ public class TimerSlider : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         yield return StartCoroutine(AnimateTimerTextUpAndChangeColor(1f));
         
         // Step 2: Change dynamic title to "Timer beendet"
-        yield return StartCoroutine(FadeTextWithCallback(_dynamicTitleGroup, "Timer beendet", 0.3f, null));
+        yield return StartCoroutine(FadeTextWithCallback(_dynamicTitleGroup, "Stoppuhr beendet", 0.3f, null));
         
         // Step 3: Wait 3 seconds
         yield return new WaitForSeconds(3f);

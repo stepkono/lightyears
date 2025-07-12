@@ -46,12 +46,6 @@ public class Controller : MonoBehaviour
         // Planet mesh 
         hobbyCreator.GetComponent<HobbyCreator>().CreateNewHobby();
         
-        // Remove distracting planets
-        foreach (GameObject planet in systemManager.GetComponent<SystemManager>().HobbyPlanets)
-        {
-            planet.GetComponent<HobbyManager>().DeactivateRendering();
-        }
-        
         // Background blur 
         globalVolume.GetComponent<VolumeManager>().ActivateVolumeBlur();
         

@@ -263,7 +263,7 @@ public class HobbyManager : MonoBehaviour
     {
         _hobbyData = hobbyData;
         TMP_Text visualName = transform.Find("PlanetContainer/PlanetRoot/Canvas/HobbyName").GetComponent<TMP_Text>();
-        visualName.text = _hobbyData.GetName().ToUpper();
+        visualName.text = _hobbyData.GetName() != null ? _hobbyData.GetName().ToUpper() : "";
     }
 
     public void SetRotationSpeed(float degSecond)
