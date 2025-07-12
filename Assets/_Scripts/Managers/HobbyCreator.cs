@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 
 public class HobbyCreator : MonoBehaviour
 {
+    private bool _firstHobbyCreated = false;
     [SerializeField] private GameObject systemManager; 
     [SerializeField] private CinemachineCamera mainSceneCamera;
     
@@ -46,7 +47,11 @@ public class HobbyCreator : MonoBehaviour
             return; 
         }
         
-        GameObject hobbyPlanet = planetPrefabs[Random.Range(0, planetPrefabs.Length)];
+        GameObject hobbyPlanet = !_firstHobbyCreated 
+            ? planetPrefabs[0] 
+            : planetPrefabs[Random.Range(0, planetPrefabs.Length)];
+
+        _firstHobbyCreated = true;
         _currentHobbyPlanet = Instantiate(hobbyPlanet, new Vector3(0, 0, 0), Quaternion.identity);
         Debug.Log("[INFO]: Hobby planet has been instantiated.");
         
