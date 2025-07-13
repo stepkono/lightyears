@@ -175,6 +175,9 @@ public class HobbyManager : MonoBehaviour
         _currentStage = _stagesContainer.GetEvoStages().First();
     }
 
+    /**
+     * Checks if the current stage can be upgraded or recovered based on the invested hours and growing state.
+     */
     private void CheckForStageUpgrade()
     {
         if (_stagesContainer == null)
@@ -210,6 +213,9 @@ public class HobbyManager : MonoBehaviour
         }
     }
 
+    /**
+     * Upgrades the current evolutionary stage based on the invested time delta.
+     */
     private void UpgradeStage()
     {
         evoContainer.transform.GetChild(_currentStage.StageIndex).gameObject.SetActive(false);
@@ -221,6 +227,9 @@ public class HobbyManager : MonoBehaviour
         _deltaHours = 0;
     }
 
+    /**
+     * Downgrades the current stage during the destruction phase.
+     */
     private void DowngradeStage()
     {
         if (_isGrowing)
@@ -240,6 +249,9 @@ public class HobbyManager : MonoBehaviour
         destContainer.transform.GetChild(_currentStage.StageIndex).gameObject.SetActive(true);
     }
 
+    /**
+     * Handles rotation logic and detects when the planet has fully rotated, checking for potential downgrades if no hours were invested.
+     */
     void Update()
     {
         float deltaRotation = _degPerSecond * Time.deltaTime * Utils.TIMESCALER;
@@ -266,6 +278,9 @@ public class HobbyManager : MonoBehaviour
         }
     }
 
+    /**
+     * Assigns new HobbyData to this HobbyManager and updates the planet's UI name field.
+     */
     public void SetHobbyData(HobbyData hobbyData)
     {
         _hobbyData = hobbyData;
@@ -273,11 +288,17 @@ public class HobbyManager : MonoBehaviour
         visualName.text = _hobbyData.GetName() != null ? _hobbyData.GetName().ToUpper() : "";
     }
 
+    /**
+     * Sets the rotation speed of the planet (degrees per second).
+     */
     public void SetRotationSpeed(float degSecond)
     {
         _degPerSecond = degSecond;
     }
 
+    /**
+     * Invests additional hours into this hobby, accumulates and checks for potential stage upgrade.
+     */
     public void InvestHours(float newHours)
     {
         Debug.Log("[DEBUG]: Investing hours.");
@@ -291,6 +312,9 @@ public class HobbyManager : MonoBehaviour
         CheckForStageUpgrade();
     }
 
+    /**
+     * Returns the total invested hours as a struct with formatted hour, minute, and second strings.
+     */
     public InvestedTimeString GetTotalInvestedHoursAsString()
     {
         int totalSeconds = (int)_investedHours;
@@ -301,21 +325,33 @@ public class HobbyManager : MonoBehaviour
         return new InvestedTimeString(hours.ToString(), minutes.ToString(), seconds.ToString());
     }
 
+    /**
+     * Gets the display name of the current stage.
+     */
     public String GetCurrentStageName()
     {
         return _currentStage.Name;
     }
 
+    /**
+     * Returns the current interval streak (consecutive success count for the stage).
+     */
     public int GetIntervalStreak()
     {
         return _intervalStreak;
     }
 
+    /**
+     * Sets the current GameObject as the reference for the planet model.
+     */
     public void SetCurrentPlanetModel(GameObject planetModel)
     {
         _currentPlanetModel = planetModel;
     }
 
+    /**
+     * Enables MeshRenderers for all evolutionary planet models.
+     */
     public void ActivateRendering()
     {
         foreach (Transform planet in _planetContainer.Find("PlanetRoot").Find("EvoStages"))
@@ -324,6 +360,9 @@ public class HobbyManager : MonoBehaviour
         }
     }
 
+    /**
+     * Disables MeshRenderers for all evolutionary planet models.
+     */
     public void DeactivateRendering()
     {
         foreach (Transform planet in _planetContainer.Find("PlanetRoot").Find("EvoStages"))
@@ -332,21 +371,33 @@ public class HobbyManager : MonoBehaviour
         }
     }
 
+    /**
+     * Returns the current (absolute) rotation speed.
+     */
     public float GetRotationSpeed()
     {
         return Math.Abs(_degPerSecond);
     }
 
+    /**
+     * Returns the HobbyData assigned to this manager.
+     */
     public HobbyData GetHobbyData()
     {
         return _hobbyData;
     }
 
+    /**
+     * Returns a reference to the transform of the orbit container.
+     */
     public Transform GetOrbitContainer()
     {
         return _orbitContainer;
     }
 
+    /**
+     * Adjusts the orbital scale and planet distance based on rank.
+     */
     public void UpdateRang(int rang)
     {
         _rang = rang;

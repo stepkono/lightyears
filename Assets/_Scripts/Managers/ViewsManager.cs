@@ -1,10 +1,8 @@
-using System;
 using System.Collections;
 using _Scripts;
 using TMPro;
 using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.UI;
 using Buffer = _Scripts.Buffer;
 
 [DefaultExecutionOrder(-2)]
@@ -46,8 +44,6 @@ public class ViewsManager : MonoBehaviour
 
     #endregion
 
-    private LaunchSlider _launchSlider;
-
     private void Awake()
     {
         if (Instance == null)
@@ -56,7 +52,6 @@ public class ViewsManager : MonoBehaviour
             DontDestroyOnLoad(transform.root.gameObject);
 
             _camerasManager = CamerasManager.GetInstance();
-            _launchSlider = viewHobbyCreation.transform.Find("LaunchSlider").GetComponent<LaunchSlider>();
         }
         else
         {

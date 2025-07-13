@@ -16,7 +16,7 @@ public class HobbyCreator : MonoBehaviour
     
     private HobbyData _currentHobbyData;
     private GameObject _currentHobbyPlanet; 
-
+    
     private void Awake()
     {
         _camerasManager = CamerasManager.GetInstance();
@@ -24,6 +24,9 @@ public class HobbyCreator : MonoBehaviour
         AppEvents.OnHobbyLaunched += DestroyHobby;
     }
 
+    /**
+     * Destroys the current hobby planet if a hobby was not launched successfully.
+     */
     private void DestroyHobby(bool launched)
     {
         if (!launched)
@@ -32,6 +35,10 @@ public class HobbyCreator : MonoBehaviour
         }
     }
     
+    /**
+     * Creates and initializes a new hobby planet and HobbyData. Selects a random or default planet prefab
+     * and sets up scene camera, creation date, and first-time setup flag.
+     */
     public void CreateNewHobby()
     {
         // Init hobby 
@@ -65,17 +72,26 @@ public class HobbyCreator : MonoBehaviour
         _camerasManager.SetCurrentCamera(centerCamera.GetComponent<CinemachineCamera>());
     }
 
+    /**
+     * Sets the name for the current HobbyData instance and logs the change.
+     */
     public void SetName(string hobbyName)
     {
         _currentHobbyData.SetName(hobbyName);
         Debug.Log("[INFO]: Hobby name has been set to: " + hobbyName);
     }
 
+    /**
+     * Activates the interval flag on the HobbyData, enabling interval input.
+     */
     public void ActivateInterval()
     {
         _currentHobbyData.ActivateInterval();
     }
 
+    /**
+     * Sets the interval (in days) for the current hobby. Issues a warning if interval is not activated.
+     */
     public void SetInterval(int days)
     {
         if (!_currentHobbyData.IntervalSet)
@@ -86,16 +102,28 @@ public class HobbyCreator : MonoBehaviour
         _currentHobbyData.SetDaysInterval(days);
     }
 
+    /**
+     * Adds a list of friends to the current HobbyData.
+     */
     public void AddFriendsToHobby(List<string> friends)
     {
         _currentHobbyData.AddFriends(friends);
     }
 
+    /**
+     * Removes all friends from the current HobbyData.
+     */
     public void RemoveFriendsFromHobby()
     {
         _currentHobbyData.RemoveFriends();
     }
 
+    /**
+     * Saves the current hobby:
+     * - Pushes the HobbyData to the planet's HobbyManager
+     * - Registers the new hobby with the SystemManager in insertion order
+     * - Switches view/camera and resets current references
+     */
     public void SaveCurrentHobby()
     {
         // Save user input data in HobbyData

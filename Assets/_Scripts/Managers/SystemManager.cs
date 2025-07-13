@@ -14,6 +14,9 @@ public class SystemManager : MonoBehaviour
         topDownCamera = topDownCamera.GetComponent<CinemachineCamera>();
     }
 
+    /**
+     * Saves a new hobby by setting up its orbit, calculating rotation speed and inserting it into the system list in the right order.
+     */
     public void SaveNewHobby(HobbyManager hobby)
     {
         HobbyData hobbyData = hobby.GetHobbyData();
@@ -35,6 +38,10 @@ public class SystemManager : MonoBehaviour
         Debug.Log("[DEBUG]: SystemManger: New hobby has been saved.");
     }
 
+    /**
+     * Inserts a hobby planet into the linked list ordered by rotation speed (orbit time).
+     * Also updates the top-down camera position and all orbits when planet count increases.
+     */
     private void InsertIntoList(GameObject hobbyPlanet)
     {
         if (HobbyPlanets.Count == 0)
@@ -67,15 +74,18 @@ public class SystemManager : MonoBehaviour
         }
     }
 
+    /**
+     * Updates all orbits by incrementally increasing their range.
+     */
     private void UpdateOrbits()
     {
         int rang = 0; 
-        Debug.Log("[DEBUG]: SystemManger: Updating orbits...");
+        Debug.Log("[INFO]: SystemManger: Updating orbits...");
         Debug.Log("------------------------------------------------------------------------------");
         foreach (GameObject hobbyPlanet in HobbyPlanets)
         {
-            Debug.Log("[DEBUG]: SystemManager: HOBBY NAME: " + hobbyPlanet.GetComponent<HobbyManager>().GetHobbyData().GetName() + " RANG :" + rang);
-            Debug.Log("[DEBUG]: SystemManager: HOBBY SPEED: " + hobbyPlanet.GetComponent<HobbyManager>().GetRotationSpeed());
+            Debug.Log("[INFO]: SystemManager: HOBBY NAME: " + hobbyPlanet.GetComponent<HobbyManager>().GetHobbyData().GetName() + " RANG :" + rang);
+            Debug.Log("[INFO]: SystemManager: HOBBY SPEED: " + hobbyPlanet.GetComponent<HobbyManager>().GetRotationSpeed());
             hobbyPlanet.GetComponent<HobbyManager>().UpdateRang(rang);
             ++rang; 
         }
