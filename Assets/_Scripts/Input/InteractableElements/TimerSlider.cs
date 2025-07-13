@@ -10,7 +10,6 @@ using UnityEngine.UI;
 public class TimerSlider : MonoBehaviour, IBeginDragHandler, IEndDragHandler
 {
     [SerializeField, Range(0f, 1f)] private float acceptThreshold = 0.9f;
-    [SerializeField] private float returnSpeed = 3f;
     [SerializeField] private UnityEvent onAccepted;
     [SerializeField] private GameObject viewParent;
     [SerializeField] private float easingTime = 0.2f;

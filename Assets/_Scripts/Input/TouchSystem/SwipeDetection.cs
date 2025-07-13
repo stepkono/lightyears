@@ -1,7 +1,6 @@
 using System;
 using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using Color = UnityEngine.Color;
 
 enum Direction
@@ -147,13 +146,8 @@ public class SwipeDetection : MonoBehaviour
         float swipeDistance = swipeDirection.magnitude;
 
         Debug.Log("Checking swipe...");
-        Debug.Log("Distance: " + swipeDistance);
-        Debug.Log("Time: " + swipeTime);
         if (swipeDistance >= minSwipeDistance && swipeTime <= maxSwipeTime)
         {
-            Debug.Log("Swipe DETECTED.");
-            Debug.Log("Startpos: " + _startPosition);
-            Debug.Log("Endpos: " + _endPosition);
             Debug.DrawLine(_startPosition, _endPosition, Color.green, 5f);
 
             float verticalBias = Vector2.Dot(Vector2.up, swipeDirection.normalized);

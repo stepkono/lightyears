@@ -9,12 +9,10 @@ public class ShareButtonManager : MonoBehaviour
     [SerializeField] private FriendListManager friendListManager;
     [SerializeField] private GameObject gradient;
     
-    private bool _fusionHobby;
     private Transform _friendsContainer;
 
     private void Start()
     {
-        _fusionHobby = false;
         _friendsContainer = transform.Find("FriendsContainer");
     }
 

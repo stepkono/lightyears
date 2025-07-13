@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -79,6 +78,9 @@ public class FriendListWindowInput : MonoBehaviour
         }
     }
 
+    /**
+     * Called to reset selected friends form the list back to default
+     */
     public void RemoveSelection()
     {
         _friends.Clear();

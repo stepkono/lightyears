@@ -10,6 +10,10 @@ public class StagesContainer
     private List<Stage> _evoStages = new List<Stage>();
     private List<Stage> _destStages = new List<Stage>();
 
+    /**
+     * Defines the single evolution and destruction stages
+     * HoursRequired is the delta time value that has to be invested to get a stage upgrade
+     */
     public StagesContainer(GameObject evoContainer, GameObject destContainer)
     {
         /*EVOLUTION*/
@@ -61,6 +65,9 @@ public class StagesContainer
         Debug.Log("STAGES CONTAINER CREATED");
     }
 
+    /**
+     * Check which stage to get based on the current stage and time invested
+     */
     public Stage GetStageForInvestedHours(float investedHours, Stage currentStage)
     {
         int currentIndex = currentStage.StageIndex;

@@ -6,13 +6,8 @@ public class PinchToZoom : MonoBehaviour
     public float zoomSpeed = 0.1f;
     public float minZoom = 2f;
     public float maxZoom = 15f;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
+    // Currently unused
     void Update()
     {
         if (Input.touchCount == 2)

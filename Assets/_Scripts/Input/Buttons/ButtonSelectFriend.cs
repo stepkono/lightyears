@@ -9,8 +9,8 @@ public class ButtonSelectFriend : MonoBehaviour
     private FriendListWindowInput _friendListWindowInput;
     private CanvasGroup _selectedBackground; 
     private bool _selected; 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Awake()
+
+    private void Awake()
     {
         _selected = false;
         _selectedBackground = transform.Find("SelectedBackground").GetComponent<CanvasGroup>();
@@ -20,7 +20,7 @@ public class ButtonSelectFriend : MonoBehaviour
         FriendListWindowInput.OnListClosed += OnListClosed;
     }
     
-    void OnDestroy()
+    private void OnDestroy()
     {
         // Unsubscribe from the event to prevent memory leaks
         FriendListWindowInput.OnListClosed -= OnListClosed;
@@ -32,6 +32,7 @@ public class ButtonSelectFriend : MonoBehaviour
         _selected = false;
     }
 
+    // Set to be called on button press
     public void SelectFriend()
     {
         if (!_selected)
@@ -53,7 +54,7 @@ public class ButtonSelectFriend : MonoBehaviour
         _selected = false;
     }
     
-    IEnumerator ActivateSelectedVisual(float from, float to)
+    private IEnumerator ActivateSelectedVisual(float from, float to)
     {
         float elapsedTimeGradient = 0f;
         float duration = 0.3f;
@@ -69,7 +70,7 @@ public class ButtonSelectFriend : MonoBehaviour
         }
     }
     
-    IEnumerator DeactivateSelectedVisual(float from, float to)
+    private IEnumerator DeactivateSelectedVisual(float from, float to)
     {
         float elapsedTimeGradient = 0f;
         float duration = 0.3f;

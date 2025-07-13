@@ -30,6 +30,7 @@ public class ButtonReminderInput : MonoBehaviour
         _reminderButtonGradient.GetComponent<CanvasGroup>().alpha = 0;
     }
 
+    // Set to be called on button click
     public void ToggleReminder()
     {
         if (!_reminderSelected)
@@ -44,7 +45,7 @@ public class ButtonReminderInput : MonoBehaviour
         }
     }
     
-    IEnumerator ActivateGradient(float from, float to)
+    private IEnumerator ActivateGradient(float from, float to)
     {
         CanvasGroup canvas = _reminderButtonGradient.GetComponent<CanvasGroup>();
         float elapsedTimeGradient = 0f;
@@ -61,7 +62,7 @@ public class ButtonReminderInput : MonoBehaviour
         }
     }
     
-    IEnumerator DeactivateGradient(float from, float to)
+    private IEnumerator DeactivateGradient(float from, float to)
     {
         CanvasGroup canvas = _reminderButtonGradient.GetComponent<CanvasGroup>();
 

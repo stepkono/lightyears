@@ -1,9 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using _Scripts;
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.UI;
 
 [DefaultExecutionOrder(-1)] // So that this script runs before all the other ones
 public class Controller : MonoBehaviour
@@ -13,14 +10,6 @@ public class Controller : MonoBehaviour
     [SerializeField] private GameObject systemManager;
     [SerializeField] private GameObject hobbyCreator;
     [SerializeField] private GameObject globalVolume;
-    
-    #region Events
-
-    public delegate void SaveHobby();
-
-    public event SaveHobby OnSaveHobby;
-
-    #endregion
 
     private ViewsManager _viewsManager; 
     
@@ -53,7 +42,7 @@ public class Controller : MonoBehaviour
         _viewsManager.ActivateHobbyCreationView();
     }
     
-    public void SaveCurrentHobby(bool launched)
+    private void SaveCurrentHobby(bool launched)
     {
         if (launched)
         {
