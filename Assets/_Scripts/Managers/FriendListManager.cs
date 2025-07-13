@@ -61,6 +61,8 @@ public class FriendListManager : MonoBehaviour
 
     public void ResetVisualSection(bool hardReset = false)
     {
+        _friends.Clear();
+        _fusionHobby = false;
         _shareButtonManager.DeactivateVisuals(hardReset);
         _friendListWindowInput.RemoveSelection();
     }

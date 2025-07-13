@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class FiendsListButton : MonoBehaviour
+public class ButtonSelectFriend : MonoBehaviour
 {
     [SerializeField] private FriendListManager friendListManager;
     [SerializeField] private string friendName;
@@ -46,6 +46,11 @@ public class FiendsListButton : MonoBehaviour
             StartCoroutine(DeactivateSelectedVisual(1, 0));
             _selected = false;
         }
+    }
+
+    public void ResetSelectedFriends()
+    {
+        _selected = false;
     }
     
     IEnumerator ActivateSelectedVisual(float from, float to)

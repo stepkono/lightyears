@@ -20,7 +20,15 @@ public class SystemManager : MonoBehaviour
         // Show orbit ring
         hobby.GetOrbitContainer().gameObject.SetActive(true); 
         // Set rotation speed
-        float degSecond = -360f / (hobbyData.GetDaysInterval() * 24 * 60 * 60);
+        float degSecond; 
+        if (hobbyData.GetDaysInterval() == 0)
+        {
+            degSecond = 0; // Prevent null division 
+        }
+        else
+        {
+            degSecond = -360f / (hobbyData.GetDaysInterval() * 24 * 60 * 60);
+        }
         hobby.SetRotationSpeed(degSecond);
         // Insert into system considering order 
         InsertIntoList(hobby.gameObject);

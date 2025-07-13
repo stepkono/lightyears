@@ -81,6 +81,8 @@ public class FriendListWindowInput : MonoBehaviour
 
     public void RemoveSelection()
     {
+        _friends.Clear();
+        DisableSave();
         if (gameObject.name == "ViewFriendsList")
         {
             List<Transform> _friendsButtons = new List<Transform>();
@@ -94,13 +96,8 @@ public class FriendListWindowInput : MonoBehaviour
             foreach (Transform friendsButton in _friendsButtons)
             {
                 friendsButton.Find("SelectedBackground").GetComponent<CanvasGroup>().alpha = 0;
+                friendsButton.GetComponent<ButtonSelectFriend>().ResetSelectedFriends();
             }
         }
-    }
-
-    public void Reset()
-    {
-        RemoveSelection();
-        DisableSave();
     }
 }
