@@ -3,9 +3,10 @@
 ## Important Setup Instructions (Unity Editor)
 
 To interact with the app via touch input during Play Mode in the Unity Editor:
-	1.	Open Window > Analysis > Input Debugger.
-	2.	In the Input Debugger window, go to Options (top-right corner).
-	3.	Enable “Simulate Touchscreen” — this allows mouse input to be interpreted as touch.
+
+1. Open Window > Analysis > Input Debugger.
+2. In the Input Debugger window, go to Options (top-left corner).
+3. Enable “Simulate Touchscreen” — this allows mouse input to be interpreted as touch.
 
 Additionally:
 The app is designed for long-term use. Normally, visible changes (e.g. planet evolution) occur over extended real-world time periods.
