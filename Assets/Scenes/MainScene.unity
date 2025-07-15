@@ -15811,12 +15811,20 @@ PrefabInstance:
       value: -0.0008726695
       objectReference: {fileID: 0}
     - target: {fileID: 5770102290092174588, guid: a2ceabeb7b08c48958fd5994bdde294e, type: 3}
+      propertyPath: m_CaretWidth
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5770102290092174588, guid: a2ceabeb7b08c48958fd5994bdde294e, type: 3}
       propertyPath: m_ContentType
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5770102290092174588, guid: a2ceabeb7b08c48958fd5994bdde294e, type: 3}
       propertyPath: m_KeyboardType
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5770102290092174588, guid: a2ceabeb7b08c48958fd5994bdde294e, type: 3}
+      propertyPath: m_HideMobileInput
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5770102290092174588, guid: a2ceabeb7b08c48958fd5994bdde294e, type: 3}
       propertyPath: m_CharacterValidation
@@ -15963,8 +15971,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7925162143422237801, guid: a2ceabeb7b08c48958fd5994bdde294e, type: 3}
+      propertyPath: m_CaretWidth
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7925162143422237801, guid: a2ceabeb7b08c48958fd5994bdde294e, type: 3}
       propertyPath: m_ContentType
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7925162143422237801, guid: a2ceabeb7b08c48958fd5994bdde294e, type: 3}
+      propertyPath: m_HideMobileInput
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7925162143422237801, guid: a2ceabeb7b08c48958fd5994bdde294e, type: 3}
       propertyPath: m_CharacterValidation
