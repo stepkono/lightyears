@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Lightyears is an app designed to help users invest time in their hobbies over the long term. By visualizing hobbies as planets and letting each user create a unique solar system over time, the app motivates users to keep engaging with their hobbies and skills in a playful, engaging way.
+Lightyears is an app prototype designed to help users invest time in their hobbies over the long term. By visualizing hobbies as planets and letting each user create a unique solar system over time, the app motivates users to keep engaging with their hobbies and skills in a playful, engaging way.
 
 ## Important Setup Instructions (Unity Editor)
 
